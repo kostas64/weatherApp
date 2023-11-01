@@ -6,6 +6,7 @@ const CText = ({
   medium,
   bold,
   semiBold,
+  extraBold,
   color = 'white',
   size = 4,
   style,
@@ -18,6 +19,8 @@ const CText = ({
       return 'Gilroy-SemiBold';
     } else if (bold) {
       return 'Gilroy-Bold';
+    } else if (extraBold) {
+      return 'Gilroy-ExtraBold';
     } else {
       return 'Gilroy-Regular';
     }
