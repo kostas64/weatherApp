@@ -28,7 +28,11 @@ const Home = () => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <View>
           {/* Header */}
-          <Header label={'Sydney'} />
+          <Header
+            label={'Sydney'}
+            leftIcon={images.menu}
+            rightIcon={images.refresh}
+          />
 
           {/* Temperature */}
           {!!weatherData && (
