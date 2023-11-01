@@ -11,7 +11,7 @@ const BasicInfoBoxItem = ({icon, tintColor, label, value}) => {
       <Image source={icon} style={[styles.icon, !!tintColor && {tintColor}]} />
 
       {/* Value */}
-      <CText bold style={styles.value}>
+      <CText extraBold style={styles.value}>
         {value}
       </CText>
 

@@ -31,9 +31,10 @@ const BasicInfoBox = ({precipitation, humidity, windSpeed}) => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: wp(6),
+    paddingVertical: wp(4),
+    paddingHorizontal: wp(6),
     marginHorizontal: wp(6),
-    borderRadius: wp(6),
+    borderRadius: wp(8),
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
