@@ -1,13 +1,26 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 
 import {colors} from '../assets/colors';
-import {images} from '../assets/images';
 
-const Header = ({label}) => {
+const Header = ({
+  label,
+  leftIcon,
+  leftIconStyle,
+  rightIcon,
+  rightIconStyle,
+  isDark,
+  onPressLeft,
+  onPressRight,
+}) => {
   const insets = useSafeAreaInsets();
+
+  const backgroundColor = {
+    backgroundColor: isDark ? colors.lightBg : colors.darkBg,
+  };
+
   const paddingTop =
     insets.top > 40
       ? insets.top
@@ -20,17 +33,21 @@ const Header = ({label}) => {
   return (
     <View style={[styles.container, {paddingTop}]}>
       {/* Left icon */}
-      <View style={styles.iconContainer}>
-        <Image source={images.menu} style={styles.img} />
-      </View>
+      <TouchableOpacity
+        onPress={onPressLeft}
+        style={[styles.iconContainer, backgroundColor]}>
+        <Image source={leftIcon} style={[styles.img, leftIconStyle]} />
+      </TouchableOpacity>
 
       {/* City name */}
       <Text style={styles.label}>{label}</Text>
 
       {/* Right icon */}
-      <View style={styles.iconContainer}>
-        <Image source={images.refresh} style={styles.img} />
-      </View>
+      <TouchableOpacity
+        onPress={onPressRight}
+        style={[styles.iconContainer, backgroundColor]}>
+        <Image source={rightIcon} style={[styles.img, rightIconStyle]} />
+      </TouchableOpacity>
     </View>
   );
 };
