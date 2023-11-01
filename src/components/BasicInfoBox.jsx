@@ -6,9 +6,9 @@ import {images} from '../assets/images';
 import {colors} from '../assets/colors';
 import BasicInfoBoxItem from './BasicInfoBoxItem';
 
-const BasicInfoBox = ({precipitation, humidity, windSpeed}) => {
+const BasicInfoBox = ({precipitation, humidity, windSpeed, containerStyle}) => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, containerStyle]}>
       <BasicInfoBoxItem
         icon={images.umbrella}
         value={`${precipitation}%`}
