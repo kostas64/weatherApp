@@ -9,6 +9,7 @@ const arrow = require('./images/arrow.png');
 const menu = require('./images/menu.png');
 const refresh = require('./images/refresh.png');
 const cross = require('./images/cross.png');
+const dots = require('./images/dots.png');
 
 const umbrella = require('./images/umbrella.png');
 const drop = require('./images/drop.png');
@@ -24,6 +25,7 @@ export const images = {
   arrow,
   menu,
   cross,
+  dots,
   refresh,
   umbrella,
   drop,
