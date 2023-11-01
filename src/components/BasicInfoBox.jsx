@@ -6,18 +6,22 @@ import {images} from '../assets/images';
 import {colors} from '../assets/colors';
 import BasicInfoBoxItem from './BasicInfoBoxItem';
 
-const BasicInfoBox = () => {
+const BasicInfoBox = ({precipitation, humidity, windSpeed}) => {
   return (
     <View style={styles.container}>
       <BasicInfoBoxItem
         icon={images.umbrella}
-        value={'30%'}
+        value={`${precipitation}%`}
         label={'Precipitation'}
       />
-      <BasicInfoBoxItem icon={images.drop} value={'30%'} label={'Humidity'} />
+      <BasicInfoBoxItem
+        icon={images.drop}
+        value={`${humidity}%`}
+        label={'Humidity'}
+      />
       <BasicInfoBoxItem
         icon={images.wind}
-        value={'12km/h'}
+        value={`${windSpeed}km/h`}
         label={'Wind Speed'}
         tintColor={'white'}
       />
