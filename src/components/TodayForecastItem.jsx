@@ -30,7 +30,7 @@ const TodayForecastItem = ({item, index, timeData, temperatureData}) => {
       )}
 
       {/* Footer */}
-      <CText bold>{temperature}</CText>
+      <CText bold>{`${temperature}°`}</CText>
     </View>
   );
 };
