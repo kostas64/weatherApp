@@ -5,13 +5,12 @@ import {View, StyleSheet} from 'react-native';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 import CText from './Text';
-import {lottie} from '../assets/lottie';
 
-const Temperature = ({temperature}) => {
+const Temperature = ({weather, animation, temperature}) => {
   return (
     <View style={styles.container}>
       {/* Title */}
-      <CText style={styles.label}>Mostly Sunny</CText>
+      <CText style={styles.label}>{weather}</CText>
 
       {/* Temperature & Unit */}
       <View style={styles.absoluteCenter}>
@@ -24,7 +23,7 @@ const Temperature = ({temperature}) => {
       </View>
 
       {/* Lottie */}
-      <LottieView autoPlay source={lottie.thunder} style={styles.lottie} />
+      <LottieView autoPlay source={animation} style={styles.lottie} />
 
       {/* Date */}
       <CText style={styles.date}>{moment().format('dddd, DD MMMM ')}</CText>
