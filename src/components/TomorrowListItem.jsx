@@ -1,8 +1,12 @@
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+
 import moment from 'moment';
 import React, {useContext} from 'react';
 import LottieView from 'lottie-react-native';
 import {View, StyleSheet} from 'react-native';
-import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 import CText from './Text';
 import {Context} from '../context/Context';
@@ -21,24 +25,35 @@ const TomorrowListItem = ({item, index}) => {
   const tempMaxForm = tempMax >= 0 ? `+${tempMax}` : `-${tempMax}`;
 
   return (
-    <View style={styles.container}>
-      {/* Left container */}
-      <CText size={5} style={styles.day}>
-        {time}
-      </CText>
+    <>
+      <View style={styles.container}>
+        {/* Left container */}
+        <CText size={5} style={styles.day}>
+          {time}
+        </CText>
 
-      {/* Middle container */}
-      <View style={styles.middleContainer}>
-        <LottieView autoPlay source={codeData?.icon} style={styles.lottie} />
-        <CText>{codeData?.description}</CText>
+        {/* Middle container */}
+        <View style={styles.middleContainer}>
+          {codeData?.icon && (
+            <LottieView
+              autoPlay
+              source={codeData?.icon}
+              style={styles.lottie}
+            />
+          )}
+          <CText>{codeData?.description}</CText>
+        </View>
+
+        {/* Right container */}
+        <View style={styles.tempsContainer}>
+          <CText bold size={5}>{`${tempMaxForm}°`}</CText>
+          <CText bold size={5}>{`${tempMinForm}°`}</CText>
+        </View>
       </View>
 
-      {/* Right container */}
-      <View style={styles.tempsContainer}>
-        <CText bold size={5}>{`${tempMaxForm}°`}</CText>
-        <CText bold size={5}>{`${tempMinForm}°`}</CText>
-      </View>
-    </View>
+      {/* Separator */}
+      <View style={styles.separator} />
+    </>
   );
 };
 
@@ -49,10 +64,10 @@ const styles = StyleSheet.create({
     marginHorizontal: wp(1),
   },
   day: {
-    width: wp(29),
+    width: wp(31),
   },
   middleContainer: {
-    width: wp(37),
+    width: wp(35),
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -65,6 +80,9 @@ const styles = StyleSheet.create({
     width: wp(20),
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  separator: {
+    height: hp(2),
   },
 });
 

@@ -14,20 +14,13 @@ const TomorrowList = () => {
   const dailyData = data?.daily;
   const listData = dailyData?.time?.slice(2, 7);
 
-  const Separator = () => <View style={{height: hp(2)}} />;
-
-  const renderItem = ({item, index}) => (
+  const renderItem = (item, index) => (
     <TomorrowListItem key={index} index={index} item={item} />
   );
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={listData}
-        renderItem={renderItem}
-        ItemSeparatorComponent={Separator}
-        showsVerticalScrollIndicator={false}
-      />
+      {listData?.map((item, index) => renderItem(item, index))}
     </View>
   );
 };
