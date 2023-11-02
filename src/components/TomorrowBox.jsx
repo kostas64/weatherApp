@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     borderRadius: wp(8),
     marginHorizontal: wp(6),
     overflow: 'hidden',
-    backgroundColor: colors.lightBg,
+    backgroundColor: colors.darkBg,
   },
   leftContainer: {
     width: wp(60),

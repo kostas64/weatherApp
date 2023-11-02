@@ -11,15 +11,10 @@ const Header = ({
   leftIconStyle,
   rightIcon,
   rightIconStyle,
-  isDark,
   onPressLeft,
   onPressRight,
 }) => {
   const insets = useSafeAreaInsets();
-
-  const backgroundColor = {
-    backgroundColor: isDark ? colors.lightBg : colors.darkBg,
-  };
 
   const paddingTop =
     insets.top > 40
@@ -33,9 +28,7 @@ const Header = ({
   return (
     <View style={[styles.container, {paddingTop}]}>
       {/* Left icon */}
-      <TouchableOpacity
-        onPress={onPressLeft}
-        style={[styles.iconContainer, backgroundColor]}>
+      <TouchableOpacity onPress={onPressLeft} style={styles.iconContainer}>
         <Image source={leftIcon} style={[styles.img, leftIconStyle]} />
       </TouchableOpacity>
 
@@ -43,9 +36,7 @@ const Header = ({
       <Text style={styles.label}>{label}</Text>
 
       {/* Right icon */}
-      <TouchableOpacity
-        onPress={onPressRight}
-        style={[styles.iconContainer, backgroundColor]}>
+      <TouchableOpacity onPress={onPressRight} style={styles.iconContainer}>
         <Image source={rightIcon} style={[styles.img, rightIconStyle]} />
       </TouchableOpacity>
     </View>

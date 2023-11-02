@@ -28,7 +28,6 @@ const SevenDays = ({navigation}) => {
       <ScrollView nestedScrollEnabled showsVerticalScrollIndicator={false}>
         {/* Header */}
         <Header
-          isDark
           label={'6 Days'}
           leftIcon={images.arrow}
           leftIconStyle={leftIconStyle}
@@ -54,7 +53,7 @@ const styles = StyleSheet.create({
   },
   backdrop: {
     position: 'absolute',
-    backgroundColor: colors.darkBg,
+    backgroundColor: colors.lightBg,
     width: '100%',
     height: '100%',
   },
