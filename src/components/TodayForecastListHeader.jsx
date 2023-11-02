@@ -15,7 +15,7 @@ const TodayForecastListHeader = () => {
     <View style={styles.container}>
       <CText>Today</CText>
       <TouchableOpacity onPress={onPress} style={styles.rowCenter}>
-        <CText>7-Day Forecast</CText>
+        <CText>6-Day Forecast</CText>
         <Image source={images.arrow} style={styles.arrow} />
       </TouchableOpacity>
     </View>
