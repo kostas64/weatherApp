@@ -3,7 +3,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import React, {useContext} from 'react';
-import {View, FlatList, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 
 import {Context} from '../context/Context';
 import TomorrowListItem from './TomorrowListItem';
