@@ -41,7 +41,10 @@ const TomorrowBox = () => {
             <CText bold size={24}>
               {tempMax}
             </CText>
-            <CText semiBold size={8}>{`/${tempMin}°`}</CText>
+            <CText
+              semiBold
+              size={8}
+              style={styles.textShadow}>{`/${tempMin}°`}</CText>
           </CText>
         </View>
         <View style={styles.rightContainer}>
@@ -96,8 +99,8 @@ const styles = StyleSheet.create({
   },
   textShadow: {
     textShadowColor: 'rgba(0, 0, 0, 0.25)',
-    textShadowOffset: {width: -1, height: 1},
-    textShadowRadius: 20,
+    textShadowOffset: {width: 0, height: 0},
+    textShadowRadius: 10,
   },
   basicInfoContainer: {
     paddingTop: wp(4),
