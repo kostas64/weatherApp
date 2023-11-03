@@ -58,3 +58,8 @@ export const navTheme = {
     background: 'transparent',
   },
 };
+
+export const query = {
+  key: 'AIzaSyAjzvohgdGHwrXs5luSWvngxl3CrS4DXqQ',
+  language: 'en',
+};
