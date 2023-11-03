@@ -1,5 +1,6 @@
 import React from 'react';
-import {View, FlatList, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
+import {FlashList} from '@shopify/flash-list';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 import TodayForecastItem from './TodayForecastItem';
@@ -29,21 +30,23 @@ const TodayForecast = ({data}) => {
       <ListHeader />
 
       {/*Today Forecast  */}
-      <FlatList
-        horizontal
-        contentContainerStyle={styles.listContainer}
-        data={weatherCodeData}
-        renderItem={renderItem}
-        ItemSeparatorComponent={Separator}
-        showsHorizontalScrollIndicator={false}
-      />
+      {weatherCodeData?.length > 0 && (
+        <FlashList
+          horizontal
+          data={weatherCodeData}
+          renderItem={renderItem}
+          showsHorizontalScrollIndicator={false}
+          ItemSeparatorComponent={Separator}
+          estimatedItemSize={wp(17)}
+          contentContainerStyle={styles.listContainer}
+        />
+      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   listContainer: {
-    flexGrow: 1,
     paddingHorizontal: wp(6),
   },
 });
