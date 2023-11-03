@@ -25,7 +25,6 @@ const Background = ({weatherCode}) => {
 
   useEffect(() => {
     if (hasWeatherCode) {
-      console.log('Count me!!');
       changeWeatherCondition(weatherCode);
     }
   }, [weatherCode]);
