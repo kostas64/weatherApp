@@ -16,7 +16,7 @@ const TomorrowListItem = ({item, index}) => {
   const {forecastData: data} = useContext(Context);
 
   const dailyData = data?.daily;
-  const time = moment(item).format('dddd');
+  const time = moment(item).format('ddd');
   const weatherCode = dailyData?.weathercode?.[index];
   const codeData = getWeatherIconFromCode(weatherCode);
   const tempMin = Math.floor(dailyData?.temperature_2m_min?.[index + 2]);
@@ -41,7 +41,7 @@ const TomorrowListItem = ({item, index}) => {
               style={styles.lottie}
             />
           )}
-          <CText>{codeData?.description}</CText>
+          <CText style={styles.descWidth}>{codeData?.description}</CText>
         </View>
 
         {/* Right container */}
@@ -64,20 +64,23 @@ const styles = StyleSheet.create({
     marginHorizontal: wp(1),
   },
   day: {
-    width: wp(31),
+    width: wp(16),
   },
   middleContainer: {
-    width: wp(35),
+    width: wp(42),
     flexDirection: 'row',
     alignItems: 'center',
   },
   lottie: {
-    width: wp(12),
-    height: wp(12),
+    width: wp(10),
+    height: wp(10),
     marginRight: wp(2),
   },
+  descWidth: {
+    width: wp(25),
+  },
   tempsContainer: {
-    width: wp(20),
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },

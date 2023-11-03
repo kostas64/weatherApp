@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
   },
   rightContainer: {
     justifyContent: 'center',
-    width: wp(40),
+    width: wp(27),
   },
   containerStyle: {
     backgroundColor: 'transparent',
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
   tempMax: {
     position: 'absolute',
     top: hp(10),
-    left: wp(16),
+    left: wp(14),
   },
   tomorrowWeather: {
     paddingTop: wp(2),
