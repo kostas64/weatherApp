@@ -1,11 +1,13 @@
 import React from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
-import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {Text, StyleSheet, Image, TouchableOpacity, View} from 'react-native';
 
 import {colors} from '../assets/colors';
+import AnimatedFade from './AnimatedFade';
 
 const Header = ({
+  animated,
   label,
   leftIcon,
   leftIconStyle,
@@ -25,8 +27,12 @@ const Header = ({
       ? insets.top + wp(6)
       : wp(8);
 
+  const Wrapper = animated ? AnimatedFade : View;
+
   return (
-    <View style={[styles.container, {paddingTop}]}>
+    <Wrapper
+      style={[styles.container, {paddingTop}]}
+      containerStyle={[styles.container, {paddingTop}]}>
       {/* Left icon */}
       <TouchableOpacity onPress={onPressLeft} style={styles.iconContainer}>
         <Image source={leftIcon} style={[styles.img, leftIconStyle]} />
@@ -39,7 +45,7 @@ const Header = ({
       <TouchableOpacity onPress={onPressRight} style={styles.iconContainer}>
         <Image source={rightIcon} style={[styles.img, rightIconStyle]} />
       </TouchableOpacity>
-    </View>
+    </Wrapper>
   );
 };
 

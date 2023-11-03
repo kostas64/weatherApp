@@ -1,69 +1,73 @@
+import {View, StyleSheet} from 'react-native';
+import React, {useContext, useEffect} from 'react';
 import {useIsFocused} from '@react-navigation/native';
-import {View, StyleSheet, Animated} from 'react-native';
-import React, {useContext, useEffect, useRef} from 'react';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import Animated, {withTiming, useSharedValue} from 'react-native-reanimated';
 
 import {images} from '../assets/images';
 import Header from '../components/Header';
 import {Context} from '../context/Context';
+import Loading from '../components/Loading';
 import OtherCities from '../components/OtherCities';
 import Temperature from '../components/Temperature';
+import AnimatedFade from '../components/AnimatedFade';
 import BasicInfoBox from '../components/BasicInfoBox';
 import TodayForecast from '../components/TodayForecast';
 import {calcPrecipitation, getWeatherIconFromCode} from '../utils/Utils';
 
 const Home = () => {
   const isFocused = useIsFocused();
-  const {forecastData} = useContext(Context);
-  const opacity = useRef(new Animated.Value(0)).current;
+  const opacity = useSharedValue(1);
+  const {forecastData, loadingApi} = useContext(Context);
   const dataCode = forecastData?.current?.weathercode;
 
   const weatherData = getWeatherIconFromCode(dataCode);
+  const showLoading = loadingApi || !forecastData?.length === 0 || !weatherData;
 
   useEffect(() => {
-    Animated.timing(opacity, {
-      toValue: isFocused ? 1 : 0,
+    opacity.value = withTiming(isFocused ? 1 : 0, {
       duration: isFocused ? 450 : 150,
-      useNativeDriver: true,
-    }).start();
+    });
   }, [isFocused]);
+
+  if (showLoading) {
+    return <Loading />;
+  }
 
   return (
     <Animated.ScrollView showsVerticalScrollIndicator={false} style={{opacity}}>
       {/* Header */}
       <Header
+        animated
         label={'Sydney'}
         leftIcon={images.menu}
         rightIcon={images.settings}
       />
 
       {/* Temperature */}
-      {!!weatherData && (
-        <View style={styles.temperatureContainer}>
-          <Temperature
-            weather={weatherData?.description}
-            animation={weatherData?.icon}
-            temperature={Math.floor(forecastData?.current?.temperature_2m)}
-          />
-        </View>
-      )}
+      <AnimatedFade containerStyle={styles.temperatureContainer}>
+        <Temperature
+          weather={weatherData?.description}
+          animation={weatherData?.icon}
+          temperature={Math.floor(forecastData?.current?.temperature_2m)}
+        />
+      </AnimatedFade>
 
       {/* Basic info box */}
-      {!!forecastData && (
-        <View style={styles.basicInfoContainer}>
-          <BasicInfoBox
-            precipitation={calcPrecipitation(forecastData)}
-            humidity={Math.floor(forecastData?.current?.relativehumidity_2m)}
-            windSpeed={Math.floor(forecastData?.current?.windspeed_10m)}
-          />
-        </View>
-      )}
+      <View style={styles.basicInfoContainer}>
+        <BasicInfoBox
+          animated
+          precipitation={calcPrecipitation(forecastData)}
+          humidity={Math.floor(forecastData?.current?.relativehumidity_2m)}
+          windSpeed={Math.floor(forecastData?.current?.windspeed_10m)}
+        />
+      </View>
 
       {/* Today's forecast */}
-      {!!forecastData && <TodayForecast data={forecastData?.hourly} />}
+      <TodayForecast data={forecastData?.hourly} />
 
       {/* Other Cities */}
-      <OtherCities />
+      <OtherCities animated />
     </Animated.ScrollView>
   );
 };

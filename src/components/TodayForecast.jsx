@@ -3,6 +3,7 @@ import {View, StyleSheet} from 'react-native';
 import {FlashList} from '@shopify/flash-list';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
+import AnimatedFade from './AnimatedFade';
 import TodayForecastItem from './TodayForecastItem';
 import TodayForecastListHeader from './TodayForecastListHeader';
 
@@ -25,7 +26,7 @@ const TodayForecast = ({data}) => {
   );
 
   return (
-    <View>
+    <AnimatedFade>
       {/*List Header */}
       <ListHeader />
 
@@ -41,7 +42,7 @@ const TodayForecast = ({data}) => {
           contentContainerStyle={styles.listContainer}
         />
       )}
-    </View>
+    </AnimatedFade>
   );
 };
 
