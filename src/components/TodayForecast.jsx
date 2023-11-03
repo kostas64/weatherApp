@@ -7,14 +7,16 @@ import AnimatedFade from './AnimatedFade';
 import TodayForecastItem from './TodayForecastItem';
 import TodayForecastListHeader from './TodayForecastListHeader';
 
-const TodayForecast = ({data}) => {
+const TodayForecast = ({data, onPress, onPressBack}) => {
   const timeData = data?.time?.slice(0, 24);
   const weatherCodeData = data?.weathercode?.slice(0, 24);
   const temperatureData = data?.temperature_2m?.slice(0, 24);
 
   const Separator = () => <View style={{width: wp(4)}} />;
 
-  const ListHeader = () => <TodayForecastListHeader />;
+  const ListHeader = () => (
+    <TodayForecastListHeader onPress={onPress} onPressBack={onPressBack} />
+  );
 
   const renderItem = ({item, index}) => (
     <TodayForecastItem

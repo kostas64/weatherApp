@@ -6,15 +6,21 @@ import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import CText from './Text';
 import {images} from '../assets/images';
 
-const TodayForecastListHeader = () => {
+const TodayForecastListHeader = ({onPress, onPressBack}) => {
   const navigation = useNavigation();
 
-  const onPress = () => navigation.navigate('SevenDays');
+  const onPressForecast = () => {
+    !!onPress && onPress();
+
+    navigation.navigate('SevenDays', {
+      onPressBack,
+    });
+  };
 
   return (
     <View style={styles.container}>
       <CText>Today</CText>
-      <TouchableOpacity onPress={onPress} style={styles.rowCenter}>
+      <TouchableOpacity onPress={onPressForecast} style={styles.rowCenter}>
         <CText>6-Day Forecast</CText>
         <Image source={images.arrow} style={styles.arrow} />
       </TouchableOpacity>

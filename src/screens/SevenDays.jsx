@@ -8,7 +8,9 @@ import Header from '../components/Header';
 import TomorrowBox from '../components/TomorrowBox';
 import TomorrowList from '../components/TomorrowList';
 
-const SevenDays = ({navigation}) => {
+const SevenDays = ({navigation, route}) => {
+  const {onPressBack} = route?.params || {};
+
   const leftIconStyle = {
     width: wp(10),
     height: wp(10),
@@ -19,6 +21,11 @@ const SevenDays = ({navigation}) => {
     ],
   };
 
+  const onPressLeftIcon = () => {
+    !!onPressBack && onPressBack();
+    navigation.pop();
+  };
+
   return (
     <ScrollView nestedScrollEnabled showsVerticalScrollIndicator={false}>
       {/* Header */}
@@ -27,7 +34,7 @@ const SevenDays = ({navigation}) => {
         leftIcon={images.arrow}
         leftIconStyle={leftIconStyle}
         rightIcon={images.dots}
-        onPressLeft={() => navigation.pop()}
+        onPressLeft={onPressLeftIcon}
       />
 
       {/* Tomorrow Box */}
