@@ -1,10 +1,15 @@
-import React from 'react';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+import React, {useState} from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {Text, StyleSheet, Image, TouchableOpacity, View} from 'react-native';
 
 import {colors} from '../assets/colors';
+import SearchInput from './SearchInput';
 import AnimatedFade from './AnimatedFade';
+import {isIOS} from '../assets/constants';
 
 const Header = ({
   animated,
@@ -15,8 +20,11 @@ const Header = ({
   rightIconStyle,
   onPressLeft,
   onPressRight,
+  onBlur,
 }) => {
   const insets = useSafeAreaInsets();
+  const [value, setValue] = useState('');
+  const [searchPressed, setSearchPressed] = useState(false);
 
   const paddingTop =
     insets.top > 40
@@ -27,6 +35,17 @@ const Header = ({
       ? insets.top + wp(6)
       : wp(8);
 
+  const onBlurSearch = () => {
+    !!onBlur && onBlur();
+    setValue('');
+    setSearchPressed(false);
+  };
+
+  const onPressLeftIcon = () => {
+    !!onPressLeft && onPressLeft();
+    setSearchPressed(true);
+  };
+
   const Wrapper = animated ? AnimatedFade : View;
 
   return (
@@ -34,17 +53,28 @@ const Header = ({
       style={[styles.container, {paddingTop}]}
       containerStyle={[styles.container, {paddingTop}]}>
       {/* Left icon */}
-      <TouchableOpacity onPress={onPressLeft} style={styles.iconContainer}>
+      <TouchableOpacity
+        disabled={searchPressed}
+        onPress={onPressLeftIcon}
+        style={styles.iconContainer}>
         <Image source={leftIcon} style={[styles.img, leftIconStyle]} />
       </TouchableOpacity>
 
       {/* City name */}
-      <Text style={styles.label}>{label}</Text>
+      {!searchPressed ? (
+        <Text style={[styles.label, isIOS && styles.lineHeight]}>{label}</Text>
+      ) : (
+        <SearchInput value={value} setValue={setValue} onBlur={onBlurSearch} />
+      )}
 
       {/* Right icon */}
-      <TouchableOpacity onPress={onPressRight} style={styles.iconContainer}>
-        <Image source={rightIcon} style={[styles.img, rightIconStyle]} />
-      </TouchableOpacity>
+      {!searchPressed ? (
+        <TouchableOpacity onPress={onPressRight} style={styles.iconContainer}>
+          <Image source={rightIcon} style={[styles.img, rightIconStyle]} />
+        </TouchableOpacity>
+      ) : (
+        <View style={styles.emptyBox} />
+      )}
     </Wrapper>
   );
 };
@@ -52,14 +82,14 @@ const Header = ({
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: wp(6),
   },
   label: {
     color: 'white',
-    fontSize: wp(4),
+    fontSize: wp(5),
     fontFamily: 'Gilroy-Bold',
+    textAlignVertical: 'center',
   },
   iconContainer: {
     width: wp(10),
@@ -68,11 +98,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: wp(3),
     backgroundColor: colors.darkBg,
+    marginVertical: hp(1),
   },
   img: {
     tintColor: 'white',
-    width: wp(6),
-    height: wp(6),
+    width: wp(5),
+    height: wp(5),
+  },
+  lineHeight: {
+    lineHeight: 56,
+  },
+  emptyBox: {
+    width: wp(10),
   },
 });
 
