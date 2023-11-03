@@ -1,3 +1,5 @@
+import {DefaultTheme} from '@react-navigation/native';
+
 import {images} from '../assets/images';
 import {lottie} from '../assets/lottie';
 
@@ -14,17 +16,11 @@ export const calcPrecipitation = forecastData => {
 export const getWeatherIconFromCode = code => {
   if (code === 0) {
     return {icon: lottie.sunny, description: 'Sunny', img: images.sunny};
-  } else if (code === 1) {
+  } else if (code === 1 || code === 2 || code === 3) {
     return {
       icon: lottie.dayCloud,
       description: 'Mostly Sunny',
-      img: images.dayCloud,
-    };
-  } else if (code === 2 || code === 3) {
-    return {
-      icon: lottie.dayManyClouds,
-      description: 'Cloudy',
-      img: images.dayManyClouds,
+      img: images.cloudy,
     };
   } else if (code === 45 || code === 48) {
     return {icon: lottie.foggy, description: 'Foggy', img: images.foggy};
@@ -53,4 +49,12 @@ export const getWeatherIconFromCode = code => {
   } else if (code === 95 || code === 96 || code === 99) {
     return {icon: lottie.thunder, description: 'Storm', img: images.thunder};
   }
+};
+
+export const navTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: 'transparent',
+  },
 };

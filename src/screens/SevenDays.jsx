@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Image, StyleSheet, ScrollView} from 'react-native';
+import {View, StyleSheet, ScrollView} from 'react-native';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 import {images} from '../assets/images';
@@ -20,30 +20,24 @@ const SevenDays = ({navigation}) => {
   };
 
   return (
-    <View style={styles.flex}>
-      {/* Image & Backdrop */}
-      <Image source={images.thunder} blurRadius={15} style={styles.img} />
-      <View style={styles.backdrop} />
+    <ScrollView nestedScrollEnabled showsVerticalScrollIndicator={false}>
+      {/* Header */}
+      <Header
+        label={'6 Days'}
+        leftIcon={images.arrow}
+        leftIconStyle={leftIconStyle}
+        rightIcon={images.dots}
+        onPressLeft={() => navigation.pop()}
+      />
 
-      <ScrollView nestedScrollEnabled showsVerticalScrollIndicator={false}>
-        {/* Header */}
-        <Header
-          label={'6 Days'}
-          leftIcon={images.arrow}
-          leftIconStyle={leftIconStyle}
-          rightIcon={images.dots}
-          onPressLeft={() => navigation.pop()}
-        />
+      {/* Tomorrow Box */}
+      <View style={styles.tomorrowContainer}>
+        <TomorrowBox />
+      </View>
 
-        {/* Tomorrow Box */}
-        <View style={styles.tomorrowContainer}>
-          <TomorrowBox />
-        </View>
-
-        {/* 5 days forecast */}
-        <TomorrowList />
-      </ScrollView>
-    </View>
+      {/* 5 days forecast */}
+      <TomorrowList />
+    </ScrollView>
   );
 };
 
