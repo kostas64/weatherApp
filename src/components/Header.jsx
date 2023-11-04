@@ -8,6 +8,7 @@ import {Text, StyleSheet, Image, TouchableOpacity, View} from 'react-native';
 
 import {colors} from '../assets/colors';
 import SearchInput from './SearchInput';
+import {images} from '../assets/images';
 import AnimatedFade from './AnimatedFade';
 import {isIOS} from '../assets/constants';
 
@@ -46,6 +47,8 @@ const Header = ({
     setSearchPressed(true);
   };
 
+  const onLeftIconPress = searchPressed ? onBlurSearch : onPressLeftIcon;
+
   const Wrapper = animated ? AnimatedFade : View;
 
   return (
@@ -53,11 +56,15 @@ const Header = ({
       style={[styles.container, {paddingTop}]}
       containerStyle={[styles.container, {paddingTop}]}>
       {/* Left icon */}
-      <TouchableOpacity
-        disabled={searchPressed}
-        onPress={onPressLeftIcon}
-        style={styles.iconContainer}>
-        <Image source={leftIcon} style={[styles.img, leftIconStyle]} />
+      <TouchableOpacity onPress={onLeftIconPress} style={styles.iconContainer}>
+        <Image
+          source={searchPressed ? images.arrow : leftIcon}
+          style={[
+            styles.img,
+            searchPressed && styles.backIconStyle,
+            leftIconStyle,
+          ]}
+        />
       </TouchableOpacity>
 
       {/* City name */}
@@ -99,6 +106,11 @@ const styles = StyleSheet.create({
     borderRadius: wp(3),
     backgroundColor: colors.darkBg,
     marginVertical: hp(1),
+  },
+  backIconStyle: {
+    width: wp(10),
+    height: wp(10),
+    transform: [{rotate: '180deg'}],
   },
   img: {
     tintColor: 'white',
