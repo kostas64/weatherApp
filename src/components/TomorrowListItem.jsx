@@ -21,8 +21,8 @@ const TomorrowListItem = ({item, index}) => {
   const codeData = getWeatherIconFromCode(weatherCode);
   const tempMin = Math.floor(dailyData?.temperature_2m_min?.[index + 2]);
   const tempMax = Math.floor(dailyData?.temperature_2m_max?.[index + 2]);
-  const tempMinForm = tempMin >= 0 ? `+${tempMin}` : `-${tempMin}`;
-  const tempMaxForm = tempMax >= 0 ? `+${tempMax}` : `-${tempMax}`;
+  const tempMinForm = tempMin >= 0 ? `+${tempMin}` : `${tempMin}`;
+  const tempMaxForm = tempMax >= 0 ? `+${tempMax}` : `${tempMax}`;
 
   return (
     <>
