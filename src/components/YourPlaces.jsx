@@ -1,13 +1,15 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet, View, FlatList} from 'react-native';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 import AnimatedFade from './AnimatedFade';
+import {Context} from '../context/Context';
 import YourPlacesItem from './YourPlacesItem';
-import {yourPlaces} from '../assets/yourPlaces';
 import YourPlacesListHeader from './YourPlacesListHeader';
 
 const YourPlaces = ({animated}) => {
+  const {yourPlaces} = useContext(Context);
+
   const Separator = () => <View style={styles.separator} />;
 
   const renderItem = ({item, index}) => (
