@@ -1,6 +1,7 @@
 import React from 'react';
+import {Image, StyleSheet, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 import CText from './Text';
