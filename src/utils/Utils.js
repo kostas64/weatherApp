@@ -2,6 +2,7 @@ import {DefaultTheme} from '@react-navigation/native';
 
 import {images} from '../assets/images';
 import {lottie} from '../assets/lottie';
+import {getYourPlacesTemp} from '../api';
 
 export const calcPrecipitation = forecastData => {
   const reducedValue = forecastData?.hourly?.precipitation_probability?.reduce(
@@ -11,6 +12,29 @@ export const calcPrecipitation = forecastData => {
   const valueToPercentage = Math.floor(reducedValue / 100);
 
   return valueToPercentage;
+};
+
+export const getTemps = async (mockPlaces, setYourPlaces) => {
+  const places = [...mockPlaces];
+
+  const promises = mockPlaces.map(async item => {
+    const data = await getYourPlacesTemp(item);
+    return data;
+  });
+
+  const result = await Promise.all(promises);
+
+  result.map((item, index) => {
+    places[index].temperature = item?.current?.temperature_2m;
+    places[index].lottie = getWeatherIconFromCode(
+      item?.current?.weathercode,
+    )?.icon;
+    places[index].desc = getWeatherIconFromCode(
+      item?.current?.weathercode,
+    )?.description;
+  });
+
+  setYourPlaces(places);
 };
 
 export const getWeatherIconFromCode = code => {
