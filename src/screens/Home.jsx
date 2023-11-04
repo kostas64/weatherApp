@@ -3,8 +3,9 @@ import Animated, {
   useSharedValue,
   useAnimatedStyle,
 } from 'react-native-reanimated';
+
+import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import React, {useContext, useEffect} from 'react';
 import {useIsFocused} from '@react-navigation/native';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
@@ -24,7 +25,8 @@ const Home = () => {
   const opacity = useSharedValue(1);
   const opacityHeader = useSharedValue(1);
 
-  const {forecastData, loadingApi} = useContext(Context);
+  const {forecastData, loadingApi, selectedPlace} = React.useContext(Context);
+
   const dataCode = forecastData?.current?.weathercode;
 
   const weatherData = getWeatherIconFromCode(dataCode);
@@ -40,7 +42,7 @@ const Home = () => {
     opacity: opacityHeader.value,
   }));
 
-  useEffect(() => {
+  React.useEffect(() => {
     isFocused && fade(opacity, 1, 450);
     !isFocused && fade(opacity, 0, 150);
   }, [isFocused]);
@@ -55,7 +57,7 @@ const Home = () => {
       <Animated.View style={animStyle}>
         <Header
           animated
-          label={'Sydney'}
+          label={selectedPlace?.city}
           onPressLeft={() => fade(opacity, 0, 300)}
           onBlur={() => fade(opacity, 1, 300)}
           leftIcon={images.search}
