@@ -21,6 +21,7 @@ import TodayForecast from '../components/TodayForecast';
 import {calcPrecipitation, getWeatherIconFromCode} from '../utils/Utils';
 
 const Home = () => {
+  const pressRef = React.useRef();
   const isFocused = useIsFocused();
   const opacity = useSharedValue(1);
   const opacityHeader = useSharedValue(1);
@@ -36,6 +37,11 @@ const Home = () => {
     shared.value = withTiming(toValue, {
       duration,
     });
+  };
+
+  const onPressAdd = () => {
+    fade(opacity, 0, 300);
+    pressRef?.current?.onLeftPress();
   };
 
   const animStyle = useAnimatedStyle(() => ({
@@ -56,6 +62,7 @@ const Home = () => {
       {/* Header */}
       <Animated.View style={animStyle}>
         <Header
+          ref={pressRef}
           animated
           label={selectedPlace?.city}
           onPressLeft={() => fade(opacity, 0, 300)}
@@ -95,7 +102,7 @@ const Home = () => {
         />
 
         {/* Other Cities */}
-        <YourPlaces animated />
+        <YourPlaces animated onPressAdd={onPressAdd} />
       </Animated.ScrollView>
     </>
   );

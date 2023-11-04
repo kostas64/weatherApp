@@ -5,11 +5,11 @@ import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import CText from './Text';
 import {images} from '../assets/images';
 
-const YourPlacesListHeader = () => {
+const YourPlacesListHeader = ({onPressAdd}) => {
   return (
     <View style={styles.container}>
       <CText>Your Places</CText>
-      <TouchableOpacity hitSlop={styles.hitSlop}>
+      <TouchableOpacity onPress={onPressAdd} hitSlop={styles.hitSlop}>
         <Image source={images.cross} style={styles.img} />
       </TouchableOpacity>
     </View>

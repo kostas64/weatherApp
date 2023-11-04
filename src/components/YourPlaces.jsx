@@ -7,7 +7,7 @@ import {Context} from '../context/Context';
 import YourPlacesItem from './YourPlacesItem';
 import YourPlacesListHeader from './YourPlacesListHeader';
 
-const YourPlaces = ({animated}) => {
+const YourPlaces = ({animated, onPressAdd}) => {
   const {yourPlaces} = useContext(Context);
 
   const Separator = () => <View style={styles.separator} />;
@@ -21,7 +21,7 @@ const YourPlaces = ({animated}) => {
   return (
     <Wrapper>
       {/* List Header */}
-      <YourPlacesListHeader />
+      <YourPlacesListHeader onPressAdd={onPressAdd} />
 
       {/* Other Cities List */}
       <FlatList

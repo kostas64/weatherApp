@@ -26,7 +26,7 @@ const ContextProvider = ({children}) => {
 
   useEffect(() => {
     getTemps(mockPlaces, setYourPlaces);
-  }, []);
+  }, [mockPlaces]);
 
   return (
     <Context.Provider

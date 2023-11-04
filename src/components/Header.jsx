@@ -2,7 +2,8 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import React, {useState} from 'react';
+
+import React from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {Text, StyleSheet, Image, TouchableOpacity, View} from 'react-native';
 
@@ -12,79 +13,103 @@ import {images} from '../assets/images';
 import AnimatedFade from './AnimatedFade';
 import {isIOS} from '../assets/constants';
 
-const Header = ({
-  animated,
-  label,
-  leftIcon,
-  leftIconStyle,
-  rightIcon,
-  rightIconStyle,
-  onPressLeft,
-  onPressRight,
-  onBlur,
-}) => {
-  const insets = useSafeAreaInsets();
-  const [value, setValue] = useState('');
-  const [searchPressed, setSearchPressed] = useState(false);
+const Header = React.forwardRef(
+  (
+    {
+      animated,
+      label,
+      leftIcon,
+      leftIconStyle,
+      rightIcon,
+      rightIconStyle,
+      onPressLeft,
+      onPressRight,
+      onBlur,
+    },
+    ref,
+  ) => {
+    const insets = useSafeAreaInsets();
+    const [value, setValue] = React.useState('');
+    const [addPressed, setAddPressed] = React.useState(false);
+    const [searchPressed, setSearchPressed] = React.useState(false);
 
-  const paddingTop =
-    insets.top > 40
-      ? insets.top
-      : insets.top > 30
-      ? insets.top + wp(2)
-      : insets.top > 20
-      ? insets.top + wp(6)
-      : wp(8);
+    const paddingTop =
+      insets.top > 40
+        ? insets.top
+        : insets.top > 30
+        ? insets.top + wp(2)
+        : insets.top > 20
+        ? insets.top + wp(6)
+        : wp(8);
 
-  const onBlurSearch = React.useCallback(() => {
-    !!onBlur && onBlur();
-    setValue('');
-    setSearchPressed(false);
-  }, []);
+    React.useImperativeHandle(ref, () => ({
+      onLeftPress: () => {
+        onLeftIconPress();
+        setAddPressed(true);
+      },
+    }));
 
-  const onPressLeftIcon = React.useCallback(() => {
-    !!onPressLeft && onPressLeft();
-    setSearchPressed(true);
-  }, []);
+    const onBlurSearch = React.useCallback(() => {
+      addPressed && setAddPressed(false);
 
-  const onLeftIconPress = searchPressed ? onBlurSearch : onPressLeftIcon;
+      !!onBlur && onBlur();
+      setValue('');
+      setSearchPressed(false);
+    }, [addPressed]);
 
-  const Wrapper = animated ? AnimatedFade : View;
+    const onPressLeftIcon = React.useCallback(() => {
+      !!onPressLeft && onPressLeft();
+      setSearchPressed(true);
+    }, []);
 
-  return (
-    <Wrapper
-      style={[styles.container, {paddingTop}]}
-      containerStyle={[styles.container, {paddingTop}]}>
-      {/* Left icon */}
-      <TouchableOpacity onPress={onLeftIconPress} style={styles.iconContainer}>
-        <Image
-          source={searchPressed ? images.arrow : leftIcon}
-          style={[
-            styles.img,
-            searchPressed && styles.backIconStyle,
-            leftIconStyle,
-          ]}
-        />
-      </TouchableOpacity>
+    const onLeftIconPress = searchPressed ? onBlurSearch : onPressLeftIcon;
 
-      {/* City name */}
-      {!searchPressed ? (
-        <Text style={[styles.label, isIOS && styles.lineHeight]}>{label}</Text>
-      ) : (
-        <SearchInput value={value} setValue={setValue} onBlur={onBlurSearch} />
-      )}
+    const Wrapper = animated ? AnimatedFade : View;
 
-      {/* Right icon */}
-      {!searchPressed ? (
-        <TouchableOpacity onPress={onPressRight} style={styles.iconContainer}>
-          <Image source={rightIcon} style={[styles.img, rightIconStyle]} />
+    return (
+      <Wrapper
+        style={[styles.container, {paddingTop}]}
+        containerStyle={[styles.container, {paddingTop}]}>
+        {/* Left icon */}
+        <TouchableOpacity
+          onPress={onLeftIconPress}
+          style={styles.iconContainer}>
+          <Image
+            source={searchPressed ? images.arrow : leftIcon}
+            style={[
+              styles.img,
+              searchPressed && styles.backIconStyle,
+              leftIconStyle,
+            ]}
+          />
         </TouchableOpacity>
-      ) : (
-        <View style={styles.emptyBox} />
-      )}
-    </Wrapper>
-  );
-};
+
+        {/* City name */}
+        {!searchPressed ? (
+          <Text style={[styles.label, isIOS && styles.lineHeight]}>
+            {label}
+          </Text>
+        ) : (
+          <SearchInput
+            value={value}
+            setValue={setValue}
+            onBlur={onBlurSearch}
+            addPressed={addPressed}
+          />
+        )}
+
+        {/* Right icon */}
+        {!searchPressed ? (
+          <TouchableOpacity onPress={onPressRight} style={styles.iconContainer}>
+            <Image source={rightIcon} style={[styles.img, rightIconStyle]} />
+          </TouchableOpacity>
+        ) : (
+          <View style={styles.emptyBox} />
+        )}
+      </Wrapper>
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   container: {
