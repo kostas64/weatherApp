@@ -1,6 +1,6 @@
 import {lottie} from './lottie';
 
-export const otherCities = [
+export const yourPlaces = [
   {
     city: 'New Zealand',
     lottie: lottie.dayCloud,

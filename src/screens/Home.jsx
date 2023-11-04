@@ -12,7 +12,7 @@ import {images} from '../assets/images';
 import Header from '../components/Header';
 import {Context} from '../context/Context';
 import Loading from '../components/Loading';
-import OtherCities from '../components/OtherCities';
+import YourPlaces from '../components/YourPlaces';
 import Temperature from '../components/Temperature';
 import AnimatedFade from '../components/AnimatedFade';
 import BasicInfoBox from '../components/BasicInfoBox';
@@ -93,7 +93,7 @@ const Home = () => {
         />
 
         {/* Other Cities */}
-        <OtherCities animated />
+        <YourPlaces animated />
       </Animated.ScrollView>
     </>
   );

@@ -3,15 +3,15 @@ import {StyleSheet, View, FlatList} from 'react-native';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 import AnimatedFade from './AnimatedFade';
-import OtherCitiesItem from './OtherCitiesItem';
-import {otherCities} from '../assets/otherCities';
-import OtherCitiesListHeader from './OtherCitiesListHeader';
+import YourPlacesItem from './YourPlacesItem';
+import {yourPlaces} from '../assets/yourPlaces';
+import YourPlacesListHeader from './YourPlacesListHeader';
 
-const OtherCities = ({animated}) => {
+const YourPlaces = ({animated}) => {
   const Separator = () => <View style={styles.separator} />;
 
   const renderItem = ({item, index}) => (
-    <OtherCitiesItem item={item} index={index} />
+    <YourPlacesItem item={item} index={index} />
   );
 
   const Wrapper = animated ? AnimatedFade : View;
@@ -19,12 +19,12 @@ const OtherCities = ({animated}) => {
   return (
     <Wrapper>
       {/* List Header */}
-      <OtherCitiesListHeader />
+      <YourPlacesListHeader />
 
       {/* Other Cities List */}
       <FlatList
-        data={otherCities}
         horizontal
+        data={yourPlaces}
         renderItem={renderItem}
         ItemSeparatorComponent={Separator}
         showsHorizontalScrollIndicator={false}
@@ -44,4 +44,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default OtherCities;
+export default YourPlaces;

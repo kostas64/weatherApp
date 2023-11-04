@@ -5,10 +5,10 @@ import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import CText from './Text';
 import {images} from '../assets/images';
 
-const OtherCitiesListHeader = () => {
+const YourPlacesListHeader = () => {
   return (
     <View style={styles.container}>
-      <CText>Other Cities</CText>
+      <CText>Your Places</CText>
       <TouchableOpacity hitSlop={styles.hitSlop}>
         <Image source={images.cross} style={styles.img} />
       </TouchableOpacity>
@@ -38,4 +38,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default OtherCitiesListHeader;
+export default YourPlacesListHeader;

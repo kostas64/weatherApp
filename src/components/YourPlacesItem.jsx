@@ -6,7 +6,7 @@ import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import CText from './Text';
 import {colors} from '../assets/colors';
 
-const OtherCitiesItem = ({item, index}) => {
+const YourPlacesItem = ({item, index}) => {
   return (
     <View key={index} style={styles.container}>
       {/* Weather animation */}
@@ -49,4 +49,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default OtherCitiesItem;
+export default YourPlacesItem;
