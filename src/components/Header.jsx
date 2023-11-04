@@ -36,16 +36,16 @@ const Header = ({
       ? insets.top + wp(6)
       : wp(8);
 
-  const onBlurSearch = () => {
+  const onBlurSearch = React.useCallback(() => {
     !!onBlur && onBlur();
     setValue('');
     setSearchPressed(false);
-  };
+  }, []);
 
-  const onPressLeftIcon = () => {
+  const onPressLeftIcon = React.useCallback(() => {
     !!onPressLeft && onPressLeft();
     setSearchPressed(true);
-  };
+  }, []);
 
   const onLeftIconPress = searchPressed ? onBlurSearch : onPressLeftIcon;
 
