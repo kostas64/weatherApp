@@ -12,10 +12,16 @@ const TodayForecast = ({data, onPress, onPressBack}) => {
   const weatherCodeData = data?.weathercode?.slice(0, 24);
   const temperatureData = data?.temperature_2m?.slice(0, 24);
 
-  const Separator = () => <View style={{width: wp(4)}} />;
+  const Separator = React.useCallback(
+    () => <View style={{width: wp(4)}} />,
+    [],
+  );
 
-  const ListHeader = () => (
-    <TodayForecastListHeader onPress={onPress} onPressBack={onPressBack} />
+  const ListHeader = React.useCallback(
+    () => (
+      <TodayForecastListHeader onPress={onPress} onPressBack={onPressBack} />
+    ),
+    [onPress, onPressBack],
   );
 
   const renderItem = ({item, index}) => (

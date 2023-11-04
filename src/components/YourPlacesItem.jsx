@@ -1,16 +1,40 @@
-import React from 'react';
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  InteractionManager,
+} from 'react-native';
+import React, {useEffect} from 'react';
 import LottieView from 'lottie-react-native';
-import {StyleSheet, View} from 'react-native';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 import CText from './Text';
 import {colors} from '../assets/colors';
+import {Context} from '../context/Context';
 
 const YourPlacesItem = ({item, index}) => {
+  const itemRef = React.useRef();
+  const {setSelectedPlace} = React.useContext(Context);
+
+  const onItemPress = () => {
+    setSelectedPlace(item);
+  };
+
+  useEffect(() => {
+    const interaction = InteractionManager.runAfterInteractions(() => {
+      itemRef.current?.play();
+    });
+
+    return () => interaction.cancel();
+  }, []);
+
   return (
-    <View key={index} style={styles.container}>
+    <TouchableOpacity
+      key={index}
+      onPress={onItemPress}
+      style={styles.container}>
       {/* Weather animation */}
-      <LottieView autoPlay source={item.lottie} style={styles.lottie} />
+      <LottieView ref={itemRef} source={item.lottie} style={styles.lottie} />
 
       {/*  City & Desc & Temperature */}
       <View style={styles.spaceHorizontal}>
@@ -19,11 +43,11 @@ const YourPlacesItem = ({item, index}) => {
       </View>
       <CText>
         <CText bold size={6}>
-          {item.temperature}
+          {Math.floor(item.temperature)}
         </CText>
         <CText size={6}>°</CText>
       </CText>
-    </View>
+    </TouchableOpacity>
   );
 };
 

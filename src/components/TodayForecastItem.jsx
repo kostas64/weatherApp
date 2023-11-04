@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import LottieView from 'lottie-react-native';
-import {StyleSheet, View} from 'react-native';
+import {InteractionManager, StyleSheet, View} from 'react-native';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 import CText from './Text';
@@ -9,9 +9,23 @@ import {colors} from '../assets/colors';
 import {getWeatherIconFromCode} from '../utils/Utils';
 
 const TodayForecastItem = ({item, index, timeData, temperatureData}) => {
+  const itemRef = React.useRef();
+
   const time = timeData?.[index];
   const icon = getWeatherIconFromCode(item)?.icon;
   const temperature = Math.floor(temperatureData?.[index]);
+
+  React.useEffect(() => {
+    let interaction;
+
+    if (!!icon) {
+      interaction = InteractionManager.runAfterInteractions(() => {
+        itemRef.current?.play();
+      });
+    }
+
+    return () => interaction?.cancel();
+  }, [icon]);
 
   return (
     <View style={styles.itemContainer}>
@@ -23,7 +37,7 @@ const TodayForecastItem = ({item, index, timeData, temperatureData}) => {
       {/* Weather animation */}
       {!!icon && (
         <LottieView
-          autoPlay
+          ref={itemRef}
           style={styles.lottie}
           source={getWeatherIconFromCode(item)?.icon}
         />
