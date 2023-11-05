@@ -11,7 +11,10 @@ import ClearInputButton from './ClearInputButton';
 
 const SearchInput = ({value, setValue, onBlur, addPressed}) => {
   const ref = React.useRef();
-  const {setSelectedPlace, setYourPlaces} = React.useContext(Context);
+  const {setSelectedPlace, yourPlaces, setYourPlaces} =
+    React.useContext(Context);
+
+  const placeholder = addPressed ? 'Add to "Your Places"' : 'Search for a city';
 
   const autocompleteStyles = {
     row: {
@@ -56,25 +59,36 @@ const SearchInput = ({value, setValue, onBlur, addPressed}) => {
   }, []);
 
   const onItemPress = (_, details = null) => {
+    const placeIndex = yourPlaces?.findIndex(
+      item => item.city === details?.name,
+    );
+
     if (addPressed) {
-      setYourPlaces(old => [
-        {
+      if (placeIndex === -1) {
+        const newPlace = {
           city: details?.name,
           latitude: details?.geometry?.location?.lat,
           longitude: details?.geometry?.location?.lng,
           lottie: lottie.dayCloud, //We add mock data
           temperature: 10, //So to create the field
           desc: 'Mostly Sunny', //Will be calculated from api
-        },
-        ...old,
-      ]);
+        };
+        setYourPlaces(old => [newPlace, ...old]);
+        setSelectedPlace(newPlace);
+      } else {
+        setSelectedPlace(yourPlaces?.[placeIndex]);
+      }
+    } else if (placeIndex !== -1) {
+      setSelectedPlace(yourPlaces?.[placeIndex]);
+    } else {
+      setSelectedPlace({
+        city: details?.name,
+        latitude: details?.geometry?.location?.lat,
+        longitude: details?.geometry?.location?.lng,
+      });
     }
 
-    setSelectedPlace({
-      city: details?.name,
-      latitude: details?.geometry?.location?.lat,
-      longitude: details?.geometry?.location?.lng,
-    });
+    !!onBlur && onBlur();
   };
 
   return (
@@ -82,7 +96,7 @@ const SearchInput = ({value, setValue, onBlur, addPressed}) => {
       <GooglePlacesAutocomplete
         ref={ref}
         styles={autocompleteStyles}
-        placeholder="Search for a city"
+        placeholder={placeholder}
         textInputProps={textInputProps}
         renderRightButton={renderRightButton}
         renderRow={renderRow}

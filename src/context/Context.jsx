@@ -2,45 +2,50 @@ import React from 'react';
 
 import {getForecast} from '../api';
 import {getTemps} from '../utils/Utils';
-import {yourPlaces as mockPlaces} from '../assets/yourPlaces';
+import {yourPlaces as places} from '../assets/yourPlaces';
 
 export const Context = React.createContext({});
 
 const ContextProvider = ({children}) => {
-  const [isCelsius, setIsCelsius] = React.useState(true);
-  const [loadingApi, setLoadingApi] = React.useState(false);
   const [forecastData, setForecastData] = React.useState([]);
-  const [yourPlaces, setYourPlaces] = React.useState(mockPlaces);
-  const [selectedPlace, setSelectedPlace] = React.useState(
-    mockPlaces?.[mockPlaces?.length - 1],
-  );
+  const [yourPlaces, setYourPlaces] = React.useState(places);
+  const [isCelsius, setIsCelsius] = React.useState(true);
+  const [selected, setSelected] = React.useState(places?.[places?.length - 1]);
+  const [loadingApi, setLoadingApi] = React.useState({
+    api1: false,
+    api2: false,
+  });
 
   const tempUnit = isCelsius ? 'celsius' : 'fahrenheit';
 
   React.useEffect(() => {
-    !loadingApi && setLoadingApi(true);
+    setLoadingApi({...loadingApi, api1: true});
 
-    getForecast(selectedPlace, tempUnit)
+    getForecast(selected, tempUnit)
       .then(data => {
         setForecastData(data);
       })
-      .finally(() => setLoadingApi(false));
-  }, [selectedPlace, isCelsius]);
+      .finally(() => setLoadingApi({...loadingApi, api1: false}));
+  }, [selected, isCelsius]);
 
   React.useEffect(() => {
-    getTemps(mockPlaces, setYourPlaces, tempUnit);
-  }, [mockPlaces, isCelsius]);
+    setLoadingApi({...loadingApi, api2: true});
+
+    getTemps(yourPlaces, setYourPlaces, tempUnit).finally(() =>
+      setLoadingApi({...loadingApi, api2: false}),
+    );
+  }, [selected, isCelsius]);
 
   return (
     <Context.Provider
       value={{
-        loadingApi,
+        loadingApi: loadingApi.api1 || loadingApi.api2,
         yourPlaces,
         setYourPlaces,
         forecastData,
         setForecastData,
-        selectedPlace,
-        setSelectedPlace,
+        selectedPlace: selected,
+        setSelectedPlace: setSelected,
         isCelsius,
         setIsCelsius,
       }}>
