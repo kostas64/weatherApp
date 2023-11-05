@@ -45,14 +45,10 @@ const SettingsBox = React.forwardRef((_, ref) => {
   };
 
   const animateClosing = () => {
-    //setIsOpen(false);
-
     opacity.value = withTiming(0, {duration: 250});
   };
 
   const animateOpening = () => {
-    //setIsOpen(true);
-
     opacity.value = withTiming(1, {duration: 250});
   };
 
