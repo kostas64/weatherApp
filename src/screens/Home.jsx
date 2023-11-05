@@ -59,6 +59,10 @@ const Home = () => {
     opacity: opacityHeader.value,
   }));
 
+  const animScrollStyle = useAnimatedStyle(() => ({
+    opacity: opacity.value,
+  }));
+
   React.useEffect(() => {
     isFocused && fade(opacity, 1, 450);
     !isFocused && fade(opacity, 0, 150);
@@ -69,7 +73,7 @@ const Home = () => {
   }
 
   return (
-    <>
+    <View style={styles.container}>
       {/* Header */}
       <Animated.View style={animStyle}>
         <Header
@@ -84,14 +88,14 @@ const Home = () => {
         />
       </Animated.View>
 
-      <Animated.ScrollView
-        showsVerticalScrollIndicator={false}
-        style={{opacity}}>
-        {/* Change unit - Celsius - Fahrenheit */}
-        <View style={styles.settingsBoxContainer}>
-          <SettingsBox ref={settingsRef} />
-        </View>
+      {/* Change unit - Celsius - Fahrenheit */}
+      <View style={styles.settingsBoxContainer}>
+        <SettingsBox ref={settingsRef} />
+      </View>
 
+      <Animated.ScrollView
+        style={animScrollStyle}
+        showsVerticalScrollIndicator={false}>
         {/* Temperature */}
         <AnimatedFade containerStyle={styles.temperatureContainer}>
           <Temperature
@@ -121,13 +125,14 @@ const Home = () => {
         {/* Other Cities */}
         <YourPlaces animated onPressAdd={onPressAdd} />
       </Animated.ScrollView>
-    </>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  flex: {
+  container: {
     flex: 1,
+    zIndex: 10000000,
   },
   settingsBoxContainer: {
     zIndex: 10000,
