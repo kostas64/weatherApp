@@ -55,6 +55,12 @@ const Home = () => {
     fade(opacityHeader, 0, 150);
   };
 
+  const onPressLeftIcon = () => {
+    //Close metrics if open
+    settingsRef?.current?.closeIfOpen();
+    fade(opacity, 0, 300);
+  };
+
   const animStyle = useAnimatedStyle(() => ({
     opacity: opacityHeader.value,
   }));
@@ -80,7 +86,7 @@ const Home = () => {
           ref={pressRef}
           animated
           label={selectedPlace?.city}
-          onPressLeft={() => fade(opacity, 0, 300)}
+          onPressLeft={onPressLeftIcon}
           onBlur={() => fade(opacity, 1, 300)}
           leftIcon={images.search}
           rightIcon={images.settings}
