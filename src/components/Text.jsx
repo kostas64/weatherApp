@@ -11,6 +11,7 @@ const CText = ({
   size = 4,
   style,
   children,
+  numberOfLines,
 }) => {
   const getFontFamily = () => {
     if (medium) {
@@ -28,6 +29,7 @@ const CText = ({
 
   return (
     <Text
+      numberOfLines={numberOfLines}
       style={[
         {
           color,

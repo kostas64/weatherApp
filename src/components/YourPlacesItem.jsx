@@ -38,7 +38,9 @@ const YourPlacesItem = ({item, index}) => {
 
       {/*  City & Desc & Temperature */}
       <View style={styles.spaceHorizontal}>
-        <CText bold>{item.city}</CText>
+        <CText bold numberOfLines={1} style={styles.city}>
+          {item.city}
+        </CText>
         <CText size={3}>{item.desc}</CText>
       </View>
       <CText>
@@ -64,12 +66,15 @@ const styles = StyleSheet.create({
   },
   spaceHorizontal: {
     marginLeft: wp(3),
-    marginRight: wp(8),
+    marginRight: wp(6),
   },
   lottie: {
     top: wp(1),
     width: wp(16),
     height: wp(18),
+  },
+  city: {
+    width: wp(28),
   },
 });
 
