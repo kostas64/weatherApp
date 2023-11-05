@@ -18,7 +18,7 @@ const ContextProvider = ({children}) => {
 
   const tempUnit = isCelsius ? 'celsius' : 'fahrenheit';
 
-  React.useEffect(() => {
+  const forecastApi = () => {
     setLoadingApi({...loadingApi, api1: true});
 
     getForecast(selected, tempUnit)
@@ -26,14 +26,22 @@ const ContextProvider = ({children}) => {
         setForecastData(data);
       })
       .finally(() => setLoadingApi({...loadingApi, api1: false}));
-  }, [selected, isCelsius]);
+  };
 
-  React.useEffect(() => {
+  const placesApi = () => {
     setLoadingApi({...loadingApi, api2: true});
 
     getTemps(yourPlaces, setYourPlaces, tempUnit).finally(() =>
       setLoadingApi({...loadingApi, api2: false}),
     );
+  };
+
+  React.useEffect(() => {
+    forecastApi();
+  }, [selected, isCelsius]);
+
+  React.useEffect(() => {
+    placesApi();
   }, [selected, isCelsius]);
 
   return (
@@ -48,6 +56,8 @@ const ContextProvider = ({children}) => {
         setSelectedPlace: setSelected,
         isCelsius,
         setIsCelsius,
+        forecastApi,
+        placesApi,
       }}>
       {children}
     </Context.Provider>
