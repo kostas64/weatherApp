@@ -71,18 +71,20 @@ const Header = React.forwardRef(
         style={[styles.container, {paddingTop}]}
         containerStyle={[styles.container, {paddingTop}]}>
         {/* Left icon */}
-        <TouchableOpacity
-          onPress={onLeftIconPress}
-          style={styles.iconContainer}>
-          <Image
-            source={searchPressed ? images.arrow : leftIcon}
-            style={[
-              styles.img,
-              searchPressed && styles.backIconStyle,
-              leftIconStyle,
-            ]}
-          />
-        </TouchableOpacity>
+        {!!leftIcon && (
+          <TouchableOpacity
+            onPress={onLeftIconPress}
+            style={styles.iconContainer}>
+            <Image
+              source={searchPressed ? images.arrow : leftIcon}
+              style={[
+                styles.img,
+                searchPressed && styles.backIconStyle,
+                leftIconStyle,
+              ]}
+            />
+          </TouchableOpacity>
+        )}
 
         {/* City name */}
         {!searchPressed ? (
@@ -99,7 +101,7 @@ const Header = React.forwardRef(
         )}
 
         {/* Right icon */}
-        {!searchPressed ? (
+        {!searchPressed && !!rightIcon ? (
           <TouchableOpacity onPress={onPressRight} style={styles.iconContainer}>
             <Image source={rightIcon} style={[styles.img, rightIconStyle]} />
           </TouchableOpacity>

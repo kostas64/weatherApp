@@ -33,7 +33,6 @@ const SevenDays = ({navigation, route}) => {
         label={'6 Days'}
         leftIcon={images.arrow}
         leftIconStyle={leftIconStyle}
-        rightIcon={images.dots}
         onPressLeft={onPressLeftIcon}
       />
 
