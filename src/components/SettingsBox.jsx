@@ -22,6 +22,7 @@ const SettingsBox = React.forwardRef((_, ref) => {
     onPress: () => {
       opacity.value > 0 ? animateClosing() : animateOpening();
     },
+    closeIfOpen: () => opacity.value > 0 && animateClosing(),
   }));
 
   const animStyle = useAnimatedStyle(() => {

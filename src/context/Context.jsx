@@ -15,19 +15,21 @@ const ContextProvider = ({children}) => {
     mockPlaces?.[mockPlaces?.length - 1],
   );
 
+  const tempUnit = isCelsius ? 'celsius' : 'fahrenheit';
+
   React.useEffect(() => {
     !loadingApi && setLoadingApi(true);
 
-    getForecast(selectedPlace)
+    getForecast(selectedPlace, tempUnit)
       .then(data => {
         setForecastData(data);
       })
       .finally(() => setLoadingApi(false));
-  }, [selectedPlace]);
+  }, [selectedPlace, isCelsius]);
 
   React.useEffect(() => {
-    getTemps(mockPlaces, setYourPlaces);
-  }, [mockPlaces]);
+    getTemps(mockPlaces, setYourPlaces, tempUnit);
+  }, [mockPlaces, isCelsius]);
 
   return (
     <Context.Provider

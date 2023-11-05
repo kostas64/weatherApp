@@ -47,6 +47,14 @@ const Home = () => {
     pressRef?.current?.onLeftPress();
   };
 
+  const onPressForecast = () => {
+    //Close metrics if open
+    settingsRef?.current?.closeIfOpen();
+
+    //Fade off main screen
+    fade(opacityHeader, 0, 150);
+  };
+
   const animStyle = useAnimatedStyle(() => ({
     opacity: opacityHeader.value,
   }));
@@ -76,14 +84,14 @@ const Home = () => {
         />
       </Animated.View>
 
-      {/* Change unit - Celsius - Fahrenheit */}
-      <View style={styles.settingsBoxContainer}>
-        <SettingsBox ref={settingsRef} />
-      </View>
-
       <Animated.ScrollView
         showsVerticalScrollIndicator={false}
         style={{opacity}}>
+        {/* Change unit - Celsius - Fahrenheit */}
+        <View style={styles.settingsBoxContainer}>
+          <SettingsBox ref={settingsRef} />
+        </View>
+
         {/* Temperature */}
         <AnimatedFade containerStyle={styles.temperatureContainer}>
           <Temperature
@@ -106,7 +114,7 @@ const Home = () => {
         {/* Today's forecast */}
         <TodayForecast
           data={forecastData?.hourly}
-          onPress={() => fade(opacityHeader, 0, 150)}
+          onPress={onPressForecast}
           onPressBack={() => fade(opacityHeader, 1, 150)}
         />
 
