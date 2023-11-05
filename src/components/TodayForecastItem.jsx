@@ -12,7 +12,7 @@ const TodayForecastItem = ({item, index, timeData, temperatureData}) => {
   const itemRef = React.useRef();
 
   const time = timeData?.[index];
-  const icon = getWeatherIconFromCode(item)?.icon;
+  const icon = getWeatherIconFromCode(item, time)?.icon;
   const temperature = Math.floor(temperatureData?.[index]);
 
   React.useEffect(() => {
@@ -39,7 +39,7 @@ const TodayForecastItem = ({item, index, timeData, temperatureData}) => {
         <LottieView
           ref={itemRef}
           style={styles.lottie}
-          source={getWeatherIconFromCode(item)?.icon}
+          source={getWeatherIconFromCode(item, time)?.icon}
         />
       )}
 

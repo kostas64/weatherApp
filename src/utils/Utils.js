@@ -1,3 +1,4 @@
+import moment from 'moment';
 import {DefaultTheme} from '@react-navigation/native';
 
 import {images} from '../assets/images';
@@ -28,6 +29,7 @@ export const getTemps = async (mockPlaces, setYourPlaces) => {
     places[index].temperature = item?.current?.temperature_2m;
     places[index].lottie = getWeatherIconFromCode(
       item?.current?.weathercode,
+      moment(),
     )?.icon;
     places[index].desc = getWeatherIconFromCode(
       item?.current?.weathercode,
@@ -37,13 +39,38 @@ export const getTemps = async (mockPlaces, setYourPlaces) => {
   setYourPlaces(places);
 };
 
-export const getWeatherIconFromCode = code => {
+export const getWeatherIconFromCode = (code, time) => {
+  const morningTime = moment('07:00:00', 'HH:mm:ss');
+  const afternoonTime = moment('20:00:00', 'HH:mm:ss');
+
+  //Check if is nght to show the proper lottie
+  const isNight = !!time
+    ? moment(time).isSameOrAfter(afternoonTime) ||
+      moment(time).isBefore(morningTime)
+    : false;
+
   if (code === 0) {
-    return {icon: lottie.sunny, description: 'Sunny', img: images.sunny};
-  } else if (code === 1 || code === 2 || code === 3) {
     return {
-      icon: lottie.dayCloud,
+      icon: isNight ? lottie.nightClear : lottie.sunny,
+      description: 'Sunny',
+      img: images.sunny,
+    };
+  } else if (code === 1) {
+    return {
+      icon: isNight ? lottie.nightCloud : lottie.dayCloud,
       description: 'Mostly Sunny',
+      img: images.cloudy,
+    };
+  } else if (
+    code === 2 ||
+    code === 3 ||
+    code === 51 ||
+    code === 53 ||
+    code === 55
+  ) {
+    return {
+      icon: isNight ? lottie.nightManyClouds : lottie.dayManyClouds,
+      description: 'Cloudy',
       img: images.cloudy,
     };
   } else if (code === 45 || code === 48) {
@@ -58,7 +85,11 @@ export const getWeatherIconFromCode = code => {
     code === 85 ||
     code === 86
   ) {
-    return {icon: lottie.snowy, description: 'Snowy', img: images.snowy};
+    return {
+      icon: isNight ? lottie.nightSnowy : lottie.snowy,
+      description: 'Snowy',
+      img: images.snowy,
+    };
   } else if (
     code === 61 ||
     code === 63 ||
@@ -69,7 +100,11 @@ export const getWeatherIconFromCode = code => {
     code === 81 ||
     code === 82
   ) {
-    return {icon: lottie.rainy, description: 'Rainy', img: images.rainy};
+    return {
+      icon: isNight ? lottie.nightRainy : lottie.rainy,
+      description: 'Rainy',
+      img: images.rainy,
+    };
   } else if (code === 95 || code === 96 || code === 99) {
     return {icon: lottie.thunder, description: 'Storm', img: images.thunder};
   }

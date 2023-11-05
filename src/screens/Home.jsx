@@ -5,6 +5,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import React from 'react';
+import moment from 'moment';
 import {View, StyleSheet} from 'react-native';
 import {useIsFocused} from '@react-navigation/native';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
@@ -30,7 +31,7 @@ const Home = () => {
 
   const dataCode = forecastData?.current?.weathercode;
 
-  const weatherData = getWeatherIconFromCode(dataCode);
+  const weatherData = getWeatherIconFromCode(dataCode, moment());
   const showLoading = loadingApi || !forecastData?.length === 0 || !weatherData;
 
   const fade = (shared, toValue, duration) => {
