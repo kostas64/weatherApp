@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import Home from '../screens/Home';
@@ -14,7 +14,7 @@ const Router = () => {
     animation: 'fade',
   };
 
-  const {forecastData} = useContext(Context);
+  const {forecastData} = React.useContext(Context);
   const dataCode = forecastData?.current?.weathercode;
   const weatherData = getWeatherIconFromCode(dataCode);
 

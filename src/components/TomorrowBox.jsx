@@ -2,7 +2,8 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import React, {useContext} from 'react';
+
+import React from 'react';
 import LottieView from 'lottie-react-native';
 import {View, StyleSheet} from 'react-native';
 
@@ -13,7 +14,8 @@ import {Context} from '../context/Context';
 import {getWeatherIconFromCode} from '../utils/Utils';
 
 const TomorrowBox = () => {
-  const {forecastData: data} = useContext(Context);
+  const {forecastData: data} = React.useContext(Context);
+
   const dailyData = data?.daily;
   const weatherCode = dailyData?.weathercode?.[1];
   const precipitation = dailyData?.precipitation_probability_max?.[1];

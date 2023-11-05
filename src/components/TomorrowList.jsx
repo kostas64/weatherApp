@@ -2,14 +2,15 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import React, {useContext} from 'react';
+
+import React from 'react';
 import {View, StyleSheet} from 'react-native';
 
 import {Context} from '../context/Context';
 import TomorrowListItem from './TomorrowListItem';
 
 const TomorrowList = () => {
-  const {forecastData: data} = useContext(Context);
+  const {forecastData: data} = React.useContext(Context);
 
   const dailyData = data?.daily;
   const listData = dailyData?.time?.slice(2, 7);

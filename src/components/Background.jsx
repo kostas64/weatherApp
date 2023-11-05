@@ -1,11 +1,11 @@
+import React from 'react';
 import {StyleSheet, View, Animated} from 'react-native';
-import React, {useEffect, useRef, useState} from 'react';
 
 import {colors} from '../assets/colors';
 
 const Background = ({weatherCode}) => {
-  const [image, setImage] = useState(null);
-  const opacity = useRef(new Animated.Value(0)).current;
+  const [image, setImage] = React.useState(null);
+  const opacity = React.useRef(new Animated.Value(0)).current;
   const hasWeatherCode = typeof weatherCode === 'number';
 
   const changeWeatherCondition = newCondition => {
@@ -23,7 +23,7 @@ const Background = ({weatherCode}) => {
     });
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (hasWeatherCode) {
       changeWeatherCondition(weatherCode);
     }

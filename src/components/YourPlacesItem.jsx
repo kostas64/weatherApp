@@ -4,7 +4,7 @@ import {
   TouchableOpacity,
   InteractionManager,
 } from 'react-native';
-import React, {useEffect} from 'react';
+import React from 'react';
 import LottieView from 'lottie-react-native';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
@@ -20,7 +20,7 @@ const YourPlacesItem = ({item, index}) => {
     setSelectedPlace(item);
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     const interaction = InteractionManager.runAfterInteractions(() => {
       itemRef.current?.play();
     });

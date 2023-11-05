@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {StyleSheet, View, FlatList} from 'react-native';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
@@ -8,7 +8,7 @@ import YourPlacesItem from './YourPlacesItem';
 import YourPlacesListHeader from './YourPlacesListHeader';
 
 const YourPlaces = ({animated, onPressAdd}) => {
-  const {yourPlaces} = useContext(Context);
+  const {yourPlaces} = React.useContext(Context);
 
   const Separator = () => <View style={styles.separator} />;
 
