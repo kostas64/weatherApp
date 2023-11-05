@@ -13,6 +13,7 @@ const dots = require('./images/dots.png');
 const settings = require('./images/settings.png');
 const search = require('./images/search.png');
 const close = require('./images/close.png');
+const tick = require('./images/tick.png');
 
 const umbrella = require('./images/umbrella.png');
 const drop = require('./images/drop.png');
@@ -30,6 +31,7 @@ export const images = {
   cross,
   close,
   dots,
+  tick,
   search,
   settings,
   refresh,
