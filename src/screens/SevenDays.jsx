@@ -1,10 +1,11 @@
 import React from 'react';
-import {View, StyleSheet, ScrollView} from 'react-native';
+import {View, StyleSheet, ScrollView, BackHandler} from 'react-native';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 import {images} from '../assets/images';
 import {colors} from '../assets/colors';
 import Header from '../components/Header';
+import {isIOS} from '../assets/constants';
 import TomorrowBox from '../components/TomorrowBox';
 import TomorrowList from '../components/TomorrowList';
 
@@ -25,6 +26,21 @@ const SevenDays = ({navigation, route}) => {
     !!onPressBack && onPressBack();
     navigation.pop();
   };
+
+  React.useEffect(() => {
+    if (isIOS) return;
+
+    const backAction = () => {
+      onPressBack();
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    return () => backHandler.remove();
+  }, []);
 
   return (
     <ScrollView nestedScrollEnabled showsVerticalScrollIndicator={false}>
