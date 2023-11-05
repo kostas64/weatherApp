@@ -1,7 +1,7 @@
 export const getForecast = async (selectedPlace, tempUnit) => {
   const lat = selectedPlace?.latitude;
   const lon = selectedPlace?.longitude;
-  console.log('tempUnit ', tempUnit);
+
   let url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relativehumidity_2m,precipitation,windspeed_10m,weathercode&hourly=weathercode,precipitation_probability,temperature_2m,relativehumidity_2m,windspeed_10m&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max,windspeed_10m_max&timezone=auto`;
 
   if (tempUnit === 'fahrenheit') {
@@ -39,8 +39,5 @@ export const getYourPlacesTemp = async (place, tempUnit) => {
   });
 
   const data = await res.json();
-
-  console.log('data ', data);
-
   return data;
 };
