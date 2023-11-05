@@ -14,7 +14,6 @@ import {getWeatherIconFromCode} from '../utils/Utils';
 
 const TomorrowBox = () => {
   const {forecastData: data} = useContext(Context);
-
   const dailyData = data?.daily;
   const weatherCode = dailyData?.weathercode?.[1];
   const precipitation = dailyData?.precipitation_probability_max?.[1];
@@ -26,10 +25,6 @@ const TomorrowBox = () => {
   const humidity = Math.floor(
     humidityData?.slice(24, 48)?.reduce((acc, cur) => acc + cur, 0) / 24,
   );
-
-  if (!weatherCode) {
-    return null;
-  }
 
   return (
     <View style={styles.container}>
@@ -107,7 +102,7 @@ const styles = StyleSheet.create({
     paddingBottom: wp(6),
   },
   lottie: {
-    left: -wp(4),
+    //left: 0, // -wp(2),
     width: wp(46),
     height: wp(50),
   },
