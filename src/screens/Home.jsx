@@ -16,6 +16,7 @@ import {Context} from '../context/Context';
 import Loading from '../components/Loading';
 import YourPlaces from '../components/YourPlaces';
 import Temperature from '../components/Temperature';
+import SettingsBox from '../components/SettingsBox';
 import AnimatedFade from '../components/AnimatedFade';
 import BasicInfoBox from '../components/BasicInfoBox';
 import TodayForecast from '../components/TodayForecast';
@@ -23,6 +24,7 @@ import {calcPrecipitation, getWeatherIconFromCode} from '../utils/Utils';
 
 const Home = () => {
   const pressRef = React.useRef();
+  const settingsRef = React.useRef();
   const isFocused = useIsFocused();
   const opacity = useSharedValue(1);
   const opacityHeader = useSharedValue(1);
@@ -70,8 +72,14 @@ const Home = () => {
           onBlur={() => fade(opacity, 1, 300)}
           leftIcon={images.search}
           rightIcon={images.settings}
+          onPressRight={() => settingsRef?.current?.onPress()}
         />
       </Animated.View>
+
+      {/* Change unit - Celsius - Fahrenheit */}
+      <View style={styles.settingsBoxContainer}>
+        <SettingsBox ref={settingsRef} />
+      </View>
 
       <Animated.ScrollView
         showsVerticalScrollIndicator={false}
@@ -113,7 +121,9 @@ const styles = StyleSheet.create({
   flex: {
     flex: 1,
   },
-
+  settingsBoxContainer: {
+    zIndex: 10000,
+  },
   temperatureContainer: {
     paddingTop: wp(4),
     height: wp(58),
