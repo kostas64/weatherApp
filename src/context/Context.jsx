@@ -7,6 +7,7 @@ import {yourPlaces as mockPlaces} from '../assets/yourPlaces';
 export const Context = React.createContext({});
 
 const ContextProvider = ({children}) => {
+  const [isCelsius, setIsCelsius] = useState(true);
   const [loadingApi, setLoadingApi] = useState(false);
   const [forecastData, setForecastData] = useState([]);
   const [yourPlaces, setYourPlaces] = useState(mockPlaces);
@@ -38,6 +39,8 @@ const ContextProvider = ({children}) => {
         setForecastData,
         selectedPlace,
         setSelectedPlace,
+        isCelsius,
+        setIsCelsius,
       }}>
       {children}
     </Context.Provider>
