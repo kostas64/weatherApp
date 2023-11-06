@@ -36,18 +36,15 @@ const SearchInput = ({value, setValue, onBlur, addPressed}) => {
     clearButtonMode: 'never',
   };
 
-  const renderRightButton = React.useCallback(
-    () => (
-      <ClearInputButton
-        onPress={() => {
-          if (value?.length > 0) {
-            setValue('');
-            ref?.current?.setAddressText('');
-          }
-        }}
-      />
-    ),
-    [],
+  const renderRightButton = () => (
+    <ClearInputButton
+      onPress={() => {
+        if (value?.length > 0) {
+          setValue('');
+          ref?.current?.setAddressText('');
+        }
+      }}
+    />
   );
 
   const renderRow = React.useCallback(data => {
