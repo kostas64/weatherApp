@@ -6,8 +6,8 @@ import Animated, {
 
 import React from 'react';
 import moment from 'moment';
-import {View, StyleSheet} from 'react-native';
 import {useIsFocused} from '@react-navigation/native';
+import {RefreshControl, View, StyleSheet} from 'react-native';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 import {images} from '../assets/images';
@@ -29,7 +29,8 @@ const Home = () => {
   const opacity = useSharedValue(1);
   const opacityHeader = useSharedValue(1);
 
-  const {forecastData, loadingApi, selectedPlace} = React.useContext(Context);
+  const {forecastData, loadingApi, forecastApi, placesApi, selectedPlace} =
+    React.useContext(Context);
 
   const dataCode = forecastData?.current?.weathercode;
 
@@ -59,6 +60,11 @@ const Home = () => {
     //Close metrics if open
     settingsRef?.current?.closeIfOpen();
     fade(opacity, 0, 300);
+  };
+
+  const onRefresh = () => {
+    forecastApi();
+    placesApi();
   };
 
   const animStyle = useAnimatedStyle(() => ({
@@ -101,7 +107,10 @@ const Home = () => {
 
       <Animated.ScrollView
         style={animScrollStyle}
-        showsVerticalScrollIndicator={false}>
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={loadingApi} onRefresh={onRefresh} />
+        }>
         {/* Temperature */}
         <AnimatedFade containerStyle={styles.temperatureContainer}>
           <Temperature
