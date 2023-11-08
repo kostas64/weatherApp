@@ -9,14 +9,19 @@ import {View, StyleSheet} from 'react-native';
 import {Context} from '../context/Context';
 import TomorrowListItem from './TomorrowListItem';
 
-const TomorrowList = () => {
+const TomorrowList = ({setModalContent}) => {
   const {forecastData: data} = React.useContext(Context);
 
   const dailyData = data?.daily;
   const listData = dailyData?.time?.slice(2, 7);
 
   const renderItem = (item, index) => (
-    <TomorrowListItem key={index} index={index} item={item} />
+    <TomorrowListItem
+      key={index}
+      index={index}
+      item={item}
+      setModalContent={setModalContent}
+    />
   );
 
   return (

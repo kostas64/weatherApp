@@ -8,8 +8,12 @@ import Header from '../components/Header';
 import {isIOS} from '../assets/constants';
 import TomorrowBox from '../components/TomorrowBox';
 import TomorrowList from '../components/TomorrowList';
+import CustomBottomSheet from '../components/CustomBottomSheet';
 
 const SevenDays = ({navigation, route}) => {
+  const bottomSheetRef = React.useRef(null);
+  const [modalContent, setModalContent] = React.useState(null);
+
   const {onPressBack} = route?.params || {};
 
   const leftIconStyle = {
@@ -27,6 +31,11 @@ const SevenDays = ({navigation, route}) => {
     navigation.pop();
   };
 
+  const onCloseBottomSheet = React.useCallback(() => {
+    setModalContent(null);
+    !!bottomSheetRef?.current && bottomSheetRef?.current?.close();
+  }, []);
+
   React.useEffect(() => {
     if (isIOS) return;
 
@@ -42,24 +51,36 @@ const SevenDays = ({navigation, route}) => {
     return () => backHandler.remove();
   }, []);
 
+  if (modalContent) {
+    bottomSheetRef.current.expand();
+  }
+
   return (
-    <ScrollView nestedScrollEnabled showsVerticalScrollIndicator={false}>
-      {/* Header */}
-      <Header
-        label={'6 Days'}
-        leftIcon={images.arrow}
-        leftIconStyle={leftIconStyle}
-        onPressLeft={onPressLeftIcon}
+    <>
+      <ScrollView nestedScrollEnabled showsVerticalScrollIndicator={false}>
+        {/* Header */}
+        <Header
+          label={'6 Days'}
+          leftIcon={images.arrow}
+          leftIconStyle={leftIconStyle}
+          onPressLeft={onPressLeftIcon}
+        />
+
+        {/* Tomorrow Box */}
+        <View style={styles.tomorrowContainer}>
+          <TomorrowBox />
+        </View>
+
+        {/* 5 days forecast */}
+        <TomorrowList setModalContent={setModalContent} />
+      </ScrollView>
+      <CustomBottomSheet
+        ref={bottomSheetRef}
+        snapPoints={[366]}
+        modalContent={modalContent}
+        onCloseBottomSheet={onCloseBottomSheet}
       />
-
-      {/* Tomorrow Box */}
-      <View style={styles.tomorrowContainer}>
-        <TomorrowBox />
-      </View>
-
-      {/* 5 days forecast */}
-      <TomorrowList />
-    </ScrollView>
+    </>
   );
 };
 

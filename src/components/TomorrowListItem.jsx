@@ -6,13 +6,14 @@ import {
 import React from 'react';
 import moment from 'moment';
 import LottieView from 'lottie-react-native';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
 
 import CText from './Text';
+import Graph from './Graph';
 import {Context} from '../context/Context';
 import {getWeatherIconFromCode} from '../utils/Utils';
 
-const TomorrowListItem = ({item, index}) => {
+const TomorrowListItem = ({item, index, setModalContent}) => {
   const {forecastData: data} = React.useContext(Context);
 
   const dailyData = data?.daily;
@@ -24,8 +25,18 @@ const TomorrowListItem = ({item, index}) => {
   const tempMinForm = tempMin >= 0 ? `+${tempMin}` : `${tempMin}`;
   const tempMaxForm = tempMax >= 0 ? `+${tempMax}` : `${tempMax}`;
 
+  const onPress = () =>
+    setModalContent(
+      <Graph
+        index={index + 2}
+        allData={data.hourly}
+        tempMin={tempMinForm}
+        tempMax={tempMaxForm}
+      />,
+    );
+
   return (
-    <>
+    <TouchableOpacity onPress={onPress}>
       <View style={styles.container}>
         {/* Left container */}
         <CText size={5} style={styles.day}>
@@ -53,7 +64,7 @@ const TomorrowListItem = ({item, index}) => {
 
       {/* Separator */}
       <View style={styles.separator} />
-    </>
+    </TouchableOpacity>
   );
 };
 
