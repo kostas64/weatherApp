@@ -6,11 +6,12 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
 import {LineChart} from 'react-native-charts-wrapper';
+import {StyleSheet, View, processColor} from 'react-native';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
+import CText from './Text';
 import GraphHeader from './GraphHeader';
 import {WIDTH} from '../assets/constants';
 import {formatData} from '../utils/GraphUtils';
@@ -100,12 +101,26 @@ const Graph = ({allData, index, tempMin, tempMax}) => {
     ],
   };
 
+  const graphAnimation = {
+    durationX: 1000,
+    durationY: 0,
+    easingY: 'EaseInOutQuad',
+  };
+
   const graphYAxis = {
     left: {
       enabled: false,
     },
     right: {
       enabled: true,
+      drawGridLines: false,
+      textColor: processColor('black'),
+      valueFormatter: '#°;-#°', //Format values with temp unit
+      zeroLine: {
+        lineWidth: 1,
+        enabled: true,
+        lineColor: processColor('black'),
+      },
     },
   };
 
@@ -124,8 +139,8 @@ const Graph = ({allData, index, tempMin, tempMax}) => {
         <View style={styles.graphInnerContainer}>
           <LineChart
             style={styles.flex}
+            animation={graphAnimation}
             onLayout={e => setLayout(e.nativeEvent.layout)}
-            doubleTapToZoomEnabled={false}
             data={graphData}
             legend={{
               enabled: false,
@@ -141,6 +156,9 @@ const Graph = ({allData, index, tempMin, tempMax}) => {
               enabled: false,
             }}
           />
+          <CText size={3.5} color="black" style={{alignSelf: 'center'}}>
+            Drag graph to check temperature per hour
+          </CText>
         </View>
 
         {/* Line indicator */}
@@ -165,7 +183,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    justifyContent: 'center',
+    paddingTop: wp(4),
   },
   graphContainer: {
     width: WIDTH,
@@ -180,9 +198,9 @@ const styles = StyleSheet.create({
   },
   indicator: {
     position: 'absolute',
-    bottom: 10,
+    bottom: wp(6),
     width: 2,
-    height: 230,
+    height: 220,
     borderRadius: 8,
     backgroundColor: 'orange',
   },

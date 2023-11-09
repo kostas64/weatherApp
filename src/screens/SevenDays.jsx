@@ -76,7 +76,7 @@ const SevenDays = ({navigation, route}) => {
       </ScrollView>
       <CustomBottomSheet
         ref={bottomSheetRef}
-        snapPoints={[366]}
+        snapPoints={[386]}
         modalContent={modalContent}
         onCloseBottomSheet={onCloseBottomSheet}
       />
