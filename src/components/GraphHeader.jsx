@@ -14,13 +14,17 @@ const GraphHeader = ({tempMin, tempMax, formattedText, rightText}) => {
           <CText size={5} bold color="black">
             {'Temperature'}
           </CText>
-          <ReText text={formattedText} style={styles.label} />
         </View>
-        <ReText text={rightText} style={styles.label} />
+        <ReText text={formattedText} style={styles.label} />
       </View>
 
       {/* Second row */}
-      <CText color="grey">{`H : ${tempMax}  L : ${tempMin}`}</CText>
+      <View style={styles.secondContainer}>
+        <CText
+          color="rgba(0,0,0,0.5)"
+          style={styles.time}>{`H : ${tempMax}  L : ${tempMin}`}</CText>
+        <ReText text={rightText} style={styles.time} />
+      </View>
     </View>
   );
 };
@@ -39,7 +43,18 @@ const styles = StyleSheet.create({
   label: {
     padding: 0,
     color: 'black',
+    fontSize: 22,
+  },
+  secondContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  time: {
+    padding: 0,
+    color: 'rgba(0,0,0,0.4)',
     fontSize: 18,
+    fontFamily: 'Gilroy-Medium',
   },
 });
 

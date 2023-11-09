@@ -27,7 +27,7 @@ const ReText = props => {
 const styles = StyleSheet.create({
   baseStyle: {
     color: 'black',
-    fontFamily: 'Gilroy-Medium',
+    fontFamily: 'Gilroy-SemiBold',
   },
 });
 
