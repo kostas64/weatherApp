@@ -3,4 +3,5 @@ export const colors = {
   lightBg: 'rgba(88,125,165, 0.25)',
   fallback: '#33495f',
   darkBgFull: 'rgb(71,43,134)',
+  yellow: '#fdc921',
 };

@@ -12,9 +12,10 @@ import {Gesture, GestureDetector} from 'react-native-gesture-handler';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 import CText from './Text';
+import {colors} from '../assets/colors';
 import GraphHeader from './GraphHeader';
-import {WIDTH} from '../assets/constants';
 import {formatData} from '../utils/GraphUtils';
+import {WIDTH, isIOS} from '../assets/constants';
 
 const Graph = ({allData, index, tempMin, tempMax}) => {
   const left = useSharedValue(0);
@@ -82,12 +83,24 @@ const Graph = ({allData, index, tempMin, tempMax}) => {
     width: onLayout?.width - 37,
   };
 
+  const colors = isIOS
+    ? [processColor('red'), processColor('blue')]
+    : [processColor('blue'), processColor('red')];
+
+  const fillGradient = {
+    colors,
+    positions: [0, 0.5],
+    angle: 90,
+    orientation: 'TOP_BOTTOM',
+  };
+
   const graphData = {
     dataSets: [
       {
         label: 'demo',
         values: temp,
         config: {
+          color: processColor('rgb(71,43,134)'),
           mode: 'CUBIC_BEZIER',
           drawCubicIntensity: 0.2,
           drawFilled: true,
@@ -96,6 +109,8 @@ const Graph = ({allData, index, tempMin, tempMax}) => {
           drawCircles: false,
           highlightLineWidth: 2,
           drawHorizontalHighlightIndicator: false,
+          fillGradient,
+          fillAlpha: 100,
         },
       },
     ],
@@ -150,12 +165,15 @@ const Graph = ({allData, index, tempMin, tempMax}) => {
               text: '',
             }}
             dragEnabled={false}
-            drawGridBackground={false}
-            drawBorders={false}
+            drawGridBackground={true}
+            drawBorders={true}
+            borderColor={processColor('rgba(0,0,0,0.3)')}
             xAxis={{
               enabled: false,
             }}
           />
+
+          {/* Graph caption */}
           <CText size={3.5} color="black" style={{alignSelf: 'center'}}>
             Drag graph to check temperature per hour
           </CText>
@@ -198,11 +216,11 @@ const styles = StyleSheet.create({
   },
   indicator: {
     position: 'absolute',
-    bottom: wp(6),
-    width: 2,
-    height: 220,
-    borderRadius: 8,
-    backgroundColor: 'orange',
+    bottom: wp(5.8),
+    width: 4,
+    height: 218,
+    borderRadius: 24,
+    backgroundColor: colors.yellow,
   },
   gestureBox: {
     top: 12,

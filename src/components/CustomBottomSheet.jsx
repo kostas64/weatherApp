@@ -33,15 +33,15 @@ const CustomBottomSheet = React.forwardRef(
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
-    borderRadius: 48,
+    borderRadius: 36,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 0,
     },
-    shadowOpacity: 0.5,
-    shadowRadius: 10,
-    elevation: 7,
+    shadowOpacity: 0.3,
+    shadowRadius: 50,
+    elevation: 3,
     zIndex: 1,
   },
   backgroundColor: {
