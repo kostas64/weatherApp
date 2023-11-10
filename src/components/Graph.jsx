@@ -1,4 +1,5 @@
 import Animated, {
+  runOnJS,
   withTiming,
   useSharedValue,
   useDerivedValue,
@@ -14,15 +15,19 @@ import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import CText from './Text';
 import {colors} from '../assets/colors';
 import GraphHeader from './GraphHeader';
-import {formatData} from '../utils/GraphUtils';
+import GraphCategory from './GraphCategory';
 import {WIDTH, isIOS} from '../assets/constants';
+import {formatData, getUnit} from '../utils/GraphUtils';
 
 const Graph = ({allData, index, tempMin, tempMax}) => {
   const left = useSharedValue(0);
   const opacity = useSharedValue(0);
   const animatedText = useSharedValue('');
   const animatedRightText = useSharedValue('');
+
+  const [zIndex, setZ] = React.useState(1);
   const [onLayout, setLayout] = React.useState(0);
+  const [selected, setSelected] = React.useState('Temperature');
 
   const formattedText = useDerivedValue(
     () => ` ${!!animatedText.value ? animatedText.value : ''}`,
@@ -30,7 +35,8 @@ const Graph = ({allData, index, tempMin, tempMax}) => {
   const formattedRightText = useDerivedValue(
     () => `${!!animatedRightText.value ? animatedRightText.value : ''}`,
   );
-  const temp = formatData(allData.temperature_2m, allData.time, index);
+
+  const graphValues = formatData(selected, allData, allData.time, index);
 
   const getIndex = e => {
     'worklet';
@@ -47,11 +53,19 @@ const Graph = ({allData, index, tempMin, tempMax}) => {
     left.value = withTiming(e.absoluteX, {duration: 1}, () => {
       opacity.value = 1;
 
+      runOnJS(setZ)(1);
+
       const index = getIndex(e);
       animatedText.value = `${
-        !!temp?.[index]?.y ? `${Math.floor(temp?.[index]?.y)}°` : ''
+        typeof graphValues?.[index]?.y === 'number'
+          ? `${Math.floor(graphValues?.[index]?.y)}${getUnit(
+              selected,
+              false,
+              true,
+            )}`
+          : ''
       }`;
-      animatedRightText.value = temp?.[index]?.time;
+      animatedRightText.value = graphValues?.[index]?.time;
     });
   });
 
@@ -62,12 +76,19 @@ const Graph = ({allData, index, tempMin, tempMax}) => {
 
       const index = getIndex(e);
       animatedText.value = `${
-        !!temp?.[index]?.y ? `${Math.floor(temp?.[index]?.y)}°` : ''
+        typeof graphValues?.[index]?.y === 'number'
+          ? `${Math.floor(graphValues?.[index]?.y)}${getUnit(
+              selected,
+              false,
+              true,
+            )}`
+          : ''
       }`;
-      animatedRightText.value = temp?.[index]?.time;
+      animatedRightText.value = graphValues?.[index]?.time;
     })
     .onFinalize(() => {
       opacity.value = 0;
+      runOnJS(setZ)(10000000);
       animatedText.value = '';
       animatedRightText.value = '';
     });
@@ -76,6 +97,12 @@ const Graph = ({allData, index, tempMin, tempMax}) => {
     return {
       opacity: opacity.value,
       left: left.value,
+    };
+  });
+
+  const opacityCategory = useAnimatedStyle(() => {
+    return {
+      opacity: opacity.value === 1 ? 0 : 1,
     };
   });
 
@@ -98,7 +125,7 @@ const Graph = ({allData, index, tempMin, tempMax}) => {
     dataSets: [
       {
         label: 'demo',
-        values: temp,
+        values: graphValues,
         config: {
           color: processColor('rgb(71,43,134)'),
           mode: 'CUBIC_BEZIER',
@@ -130,7 +157,12 @@ const Graph = ({allData, index, tempMin, tempMax}) => {
       enabled: true,
       drawGridLines: false,
       textColor: processColor('black'),
-      valueFormatter: '#°;-#°', //Format values with temp unit
+      //Format values with temp unit
+      valueFormatter: `#${getUnit(selected, true, false)};-#${getUnit(
+        selected,
+        true,
+        false,
+      )}`,
       zeroLine: {
         lineWidth: 1,
         enabled: true,
@@ -139,15 +171,32 @@ const Graph = ({allData, index, tempMin, tempMax}) => {
     },
   };
 
+  React.useEffect(() => {
+    setTimeout(() => {
+      setZ(10000000);
+    }, 50);
+  }, []);
+
   return (
     <View style={styles.container}>
       {/* Graph header */}
       <GraphHeader
+        category={selected}
         tempMin={tempMin}
         tempMax={tempMax}
         formattedText={formattedText}
         rightText={formattedRightText}
       />
+
+      {/* Graph Category Button */}
+      <Animated.View
+        style={[styles.categoryCont, {zIndex: zIndex}, opacityCategory]}>
+        <GraphCategory
+          categoryOpacity={opacity}
+          selected={selected}
+          setSelected={setSelected}
+        />
+      </Animated.View>
 
       {/* Graph   */}
       <View style={styles.graphContainer}>
@@ -155,7 +204,10 @@ const Graph = ({allData, index, tempMin, tempMax}) => {
           <LineChart
             style={styles.flex}
             animation={graphAnimation}
+            highlightPerDragEnabled={false}
+            highlightPerTapEnabled={false}
             onLayout={e => setLayout(e.nativeEvent.layout)}
+            doubleTapToZoomEnabled={false}
             data={graphData}
             legend={{
               enabled: false,
@@ -175,7 +227,7 @@ const Graph = ({allData, index, tempMin, tempMax}) => {
 
           {/* Graph caption */}
           <CText size={3.5} color="black" style={{alignSelf: 'center'}}>
-            Drag graph to check temperature per hour
+            {`Drag graph to check ${selected?.toLowerCase()} per hour`}
           </CText>
         </View>
 
@@ -210,8 +262,6 @@ const styles = StyleSheet.create({
   graphInnerContainer: {
     flex: 1,
     backgroundColor: 'white',
-    borderTopLeftRadius: wp(6),
-    borderTopRightRadius: wp(6),
     paddingHorizontal: wp(4),
   },
   indicator: {
@@ -228,6 +278,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     backgroundColor: 'transparent',
     height: 230,
+    zIndex: 1,
+  },
+  categoryCont: {
+    top: 20,
+    position: 'absolute',
+    right: wp(5),
   },
 });
 

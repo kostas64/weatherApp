@@ -12,6 +12,8 @@ const GraphHeader = ({
   formattedText,
   rightText,
 }) => {
+  const tempLimits = category === 'Temperature';
+
   return (
     <View style={styles.container}>
       {/* First row */}
@@ -26,9 +28,13 @@ const GraphHeader = ({
 
       {/* Second row */}
       <View style={styles.secondContainer}>
-        <CText
-          color="rgba(0,0,0,0.5)"
-          style={styles.time}>{`H : ${tempMax}  L : ${tempMin}`}</CText>
+        {tempLimits ? (
+          <CText
+            color="rgba(0,0,0,0.5)"
+            style={styles.time}>{`H : ${tempMax}  L : ${tempMin}`}</CText>
+        ) : (
+          <View />
+        )}
         <ReText text={rightText} style={styles.time} />
       </View>
     </View>
