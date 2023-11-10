@@ -281,7 +281,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   categoryCont: {
-    top: 20,
+    top: 18,
     position: 'absolute',
     right: wp(5),
   },

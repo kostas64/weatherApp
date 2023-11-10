@@ -31,14 +31,14 @@ const GraphCategoryButton = ({selected, animateList}) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: 90,
-    paddingVertical: wp(2),
-    paddingHorizontal: wp(3),
+    width: 80,
+    height: 38,
+    paddingHorizontal: wp(2),
     alignSelf: 'flex-end',
     flexDirection: 'row',
     alignItems: 'center',
     borderRadius: wp(5),
-    justifyContent: 'space-around',
+    justifyContent: 'space-evenly',
     backgroundColor: colors.fallback,
     shadowColor: '#000',
     shadowOffset: {
@@ -50,12 +50,12 @@ const styles = StyleSheet.create({
     elevation: 10,
   },
   icon: {
-    width: wp(5),
-    height: wp(5),
+    width: wp(4),
+    height: wp(4),
     tintColor: 'white',
   },
   arrow: {
-    width: wp(6),
+    width: wp(4),
     height: wp(6),
     tintColor: 'white',
     transform: [{rotate: '90deg'}],
