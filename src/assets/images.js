@@ -19,6 +19,10 @@ const umbrella = require('./images/umbrella.png');
 const drop = require('./images/drop.png');
 const wind = require('./images/wind.png');
 
+const humidity = require('./images/humidity.png');
+const precipitation = require('./images/precipitation.png');
+const temperature = require('./images/temperature.png');
+
 export const images = {
   snowy,
   thunder,
@@ -38,4 +42,7 @@ export const images = {
   umbrella,
   drop,
   wind,
+  humidity,
+  precipitation,
+  temperature,
 };
