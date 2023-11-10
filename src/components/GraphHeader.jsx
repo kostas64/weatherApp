@@ -5,14 +5,20 @@ import React from 'react';
 import CText from './Text';
 import ReText from './ReText';
 
-const GraphHeader = ({tempMin, tempMax, formattedText, rightText}) => {
+const GraphHeader = ({
+  category,
+  tempMin,
+  tempMax,
+  formattedText,
+  rightText,
+}) => {
   return (
     <View style={styles.container}>
       {/* First row */}
       <View style={[styles.rowCenter, styles.between]}>
         <View style={styles.rowCenter}>
-          <CText size={5} bold color="black">
-            {'Temperature'}
+          <CText size={6} bold color="black">
+            {category}
           </CText>
         </View>
         <ReText text={formattedText} style={styles.label} />
