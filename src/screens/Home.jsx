@@ -14,6 +14,7 @@ import {images} from '../assets/images';
 import Header from '../components/Header';
 import {Context} from '../context/Context';
 import Loading from '../components/Loading';
+import AddButton from '../components/AddButton';
 import YourPlaces from '../components/YourPlaces';
 import Temperature from '../components/Temperature';
 import SettingsBox from '../components/SettingsBox';
@@ -111,6 +112,11 @@ const Home = () => {
         refreshControl={
           <RefreshControl refreshing={loadingApi} onRefresh={onRefresh} />
         }>
+        {/* Button when place is not in "Your Places" */}
+        <AnimatedFade containerStyle={{zIndex: 100}}>
+          <AddButton />
+        </AnimatedFade>
+
         {/* Temperature */}
         <AnimatedFade containerStyle={styles.temperatureContainer}>
           <Temperature
