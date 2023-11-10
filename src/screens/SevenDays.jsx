@@ -68,7 +68,7 @@ const SevenDays = ({navigation, route}) => {
 
         {/* Tomorrow Box */}
         <View style={styles.tomorrowContainer}>
-          <TomorrowBox />
+          <TomorrowBox setModalContent={setModalContent} />
         </View>
 
         {/* 5 days forecast */}

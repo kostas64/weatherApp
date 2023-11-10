@@ -5,15 +5,16 @@ import {
 
 import React from 'react';
 import LottieView from 'lottie-react-native';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Pressable} from 'react-native';
 
 import CText from './Text';
+import Graph from './Graph';
 import {colors} from '../assets/colors';
 import BasicInfoBox from './BasicInfoBox';
 import {Context} from '../context/Context';
 import {getWeatherIconFromCode} from '../utils/Utils';
 
-const TomorrowBox = () => {
+const TomorrowBox = ({setModalContent}) => {
   const {forecastData: data} = React.useContext(Context);
 
   const dailyData = data?.daily;
@@ -23,13 +24,26 @@ const TomorrowBox = () => {
   const windSpeed = Math.floor(dailyData?.windspeed_10m_max?.[1]);
   const tempMin = Math.floor(dailyData?.temperature_2m_min?.[1]);
   const tempMax = Math.floor(dailyData?.temperature_2m_max?.[1]);
+  const tempMinForm = tempMin >= 0 ? `+${tempMin}` : `${tempMin}`;
+  const tempMaxForm = tempMax >= 0 ? `+${tempMax}` : `${tempMax}`;
   const codeData = getWeatherIconFromCode(weatherCode);
   const humidity = Math.floor(
     humidityData?.slice(24, 48)?.reduce((acc, cur) => acc + cur, 0) / 24,
   );
 
+  const onBoxPress = React.useCallback(() => {
+    setModalContent(
+      <Graph
+        index={1}
+        allData={data.hourly}
+        tempMin={tempMinForm}
+        tempMax={tempMaxForm}
+      />,
+    );
+  }, [data]);
+
   return (
-    <View style={styles.container}>
+    <Pressable onPress={onBoxPress} style={styles.container}>
       {/* Weather animtation  & Temperatures */}
       <View style={styles.row}>
         <View style={styles.leftContainer}>
@@ -61,7 +75,7 @@ const TomorrowBox = () => {
           containerStyle={styles.containerStyle}
         />
       </View>
-    </View>
+    </Pressable>
   );
 };
 
