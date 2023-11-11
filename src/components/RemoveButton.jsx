@@ -12,7 +12,7 @@ import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 const options = {
   enableVibrateFallback: true,
-  ignoreAndroidSystemSettings: false,
+  ignoreAndroidSystemSettings: true,
 };
 
 const AnimTouch = Animated.createAnimatedComponent(TouchableOpacity);
