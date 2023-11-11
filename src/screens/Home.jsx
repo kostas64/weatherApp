@@ -29,6 +29,7 @@ const Home = () => {
   const isFocused = useIsFocused();
   const opacity = useSharedValue(1);
   const opacityHeader = useSharedValue(1);
+  const [longPressActivated, setLongPressActivated] = React.useState(false);
 
   const {forecastData, loadingApi, forecastApi, placesApi, selectedPlace} =
     React.useContext(Context);
@@ -144,7 +145,13 @@ const Home = () => {
         />
 
         {/* Other Cities */}
-        <YourPlaces animated onPressAdd={onPressAdd} />
+
+        <YourPlaces
+          animated
+          onPressAdd={onPressAdd}
+          longPressActivated={longPressActivated}
+          setLongPressActivated={setLongPressActivated}
+        />
       </Animated.ScrollView>
     </View>
   );

@@ -11,7 +11,7 @@ import {colors} from '../assets/colors';
 import SearchInput from './SearchInput';
 import {images} from '../assets/images';
 import AnimatedFade from './AnimatedFade';
-import {isIOS} from '../assets/constants';
+import {WIDTH, isIOS} from '../assets/constants';
 
 const Header = React.forwardRef(
   (
@@ -88,7 +88,9 @@ const Header = React.forwardRef(
 
         {/* City name */}
         {!searchPressed ? (
-          <Text style={[styles.label, isIOS && styles.lineHeight]}>
+          <Text
+            numberOfLines={1}
+            style={[styles.label, isIOS && styles.lineHeight]}>
             {label}
           </Text>
         ) : (
@@ -121,9 +123,11 @@ const styles = StyleSheet.create({
   },
   label: {
     color: 'white',
-    fontSize: wp(5),
+    fontSize: wp(4.5),
+    textAlign: 'center',
     fontFamily: 'Gilroy-Bold',
     textAlignVertical: 'center',
+    width: WIDTH - 146,
   },
   iconContainer: {
     width: wp(10),

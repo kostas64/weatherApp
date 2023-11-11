@@ -57,6 +57,7 @@ const ContextProvider = ({children}) => {
     <Context.Provider
       value={{
         loadingApi: loadingApi.api1 || loadingApi.api2,
+        setLoadingApi,
         yourPlaces,
         setYourPlaces,
         forecastData,
