@@ -110,6 +110,18 @@ export const getWeatherIconFromCode = (code, time) => {
   }
 };
 
+export const findFirstFutureIndex = timestamps => {
+  // Get the current time using Moment.js
+  const now = moment();
+
+  // Find the index of the first timestamp that is after the current time
+  const futureIndex = timestamps.findIndex(timestamp =>
+    moment(timestamp).isAfter(now),
+  );
+
+  return futureIndex;
+};
+
 export const navTheme = {
   ...DefaultTheme,
   colors: {

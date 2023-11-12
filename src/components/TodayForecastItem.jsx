@@ -8,12 +8,19 @@ import CText from './Text';
 import {colors} from '../assets/colors';
 import {getWeatherIconFromCode} from '../utils/Utils';
 
-const TodayForecastItem = ({item, index, timeData, temperatureData}) => {
+const TodayForecastItem = ({
+  item,
+  index,
+  indexToScroll,
+  timeData,
+  temperatureData,
+}) => {
   const itemRef = React.useRef();
 
   const time = timeData?.[index];
   const icon = getWeatherIconFromCode(item, time)?.icon;
   const temperature = Math.floor(temperatureData?.[index]);
+  const opacity = indexToScroll > index ? 0.7 : 1;
 
   React.useEffect(() => {
     let interaction;
@@ -28,7 +35,7 @@ const TodayForecastItem = ({item, index, timeData, temperatureData}) => {
   }, [icon]);
 
   return (
-    <View style={styles.itemContainer}>
+    <View style={[styles.itemContainer, {opacity}]}>
       {/* Time */}
       <CText medium size={3}>
         {moment(time).format('h A')}
