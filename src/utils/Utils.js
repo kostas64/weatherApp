@@ -1,9 +1,14 @@
 import moment from 'moment';
+import BootSplash from 'react-native-bootsplash';
 import {DefaultTheme} from '@react-navigation/native';
 
 import {images} from '../assets/images';
 import {lottie} from '../assets/lottie';
 import {getYourPlacesTemp} from '../api';
+
+export const hideSplash = async () => {
+  await BootSplash.hide();
+};
 
 export const calcPrecipitation = forecastData => {
   const reducedValue = forecastData?.hourly?.precipitation_probability?.reduce(
