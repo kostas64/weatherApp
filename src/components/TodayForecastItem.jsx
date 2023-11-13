@@ -58,17 +58,18 @@ const TodayForecastItem = ({
 
 const styles = StyleSheet.create({
   itemContainer: {
+    width: 64,
     marginTop: wp(2),
     borderRadius: wp(6),
     alignItems: 'center',
     paddingVertical: wp(4),
-    paddingHorizontal: wp(3),
+
     backgroundColor: colors.darkBg,
   },
   lottie: {
     marginTop: wp(2),
-    width: wp(11),
-    height: wp(11),
+    width: 42,
+    height: 42,
   },
 });
 

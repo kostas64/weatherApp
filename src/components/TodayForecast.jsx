@@ -1,6 +1,6 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
 import {FlashList} from '@shopify/flash-list';
+import {View, StyleSheet, InteractionManager} from 'react-native';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 import {Context} from '../context/Context';
@@ -41,13 +41,15 @@ const TodayForecast = ({data, onPress, onPressBack}) => {
 
   React.useEffect(() => {
     if (indexToScroll > 0 && weatherCodeData?.length > 0) {
-      //wp(17) -> itemWidth  16 -> separator
-      setTimeout(() => {
-        listRef?.current?.scrollToOffset({
-          offset: indexToScroll * wp(17) + indexToScroll * 16,
-          animated: true,
-        });
-      }, 10);
+      InteractionManager.runAfterInteractions(() => {
+        //750 because 250delay + 500duration of FadeInDown anim
+        setTimeout(() => {
+          listRef?.current?.scrollToOffset({
+            offset: indexToScroll * 80,
+            animated: true,
+          });
+        }, 750);
+      });
     }
   }, [timeData, weatherCodeData, selectedPlace]);
 
@@ -62,10 +64,10 @@ const TodayForecast = ({data, onPress, onPressBack}) => {
           ref={listRef}
           horizontal
           data={weatherCodeData}
+          estimatedItemSize={80}
           renderItem={renderItem}
           showsHorizontalScrollIndicator={false}
           ItemSeparatorComponent={Separator}
-          estimatedItemSize={wp(17)}
           contentContainerStyle={styles.listContainer}
         />
       )}
