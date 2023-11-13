@@ -1,13 +1,17 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import BottomSheet, {BottomSheetBackdrop} from '@gorhom/bottom-sheet';
+import {useBottomSheetBackHandler} from '../hooks/useBottomSheetBackHandler';
 
 const CustomBottomSheet = React.forwardRef(
   ({modalContent, onCloseBottomSheet, snapPoints}, ref) => {
+    const {handleSheetPositionChange} = useBottomSheetBackHandler(ref);
+
     return (
       <BottomSheet
         ref={ref}
         index={-1}
+        onChange={handleSheetPositionChange}
         style={styles.container}
         onClose={onCloseBottomSheet}
         backgroundComponent={() => <View />}

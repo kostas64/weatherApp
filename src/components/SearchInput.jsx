@@ -8,6 +8,7 @@ import {query} from '../utils/Utils';
 import {lottie} from '../assets/lottie';
 import {Context} from '../context/Context';
 import ClearInputButton from './ClearInputButton';
+import useBackAction from '../hooks/useBackAction';
 
 const SearchInput = ({value, setValue, onBlur, addPressed}) => {
   const ref = React.useRef();
@@ -87,6 +88,8 @@ const SearchInput = ({value, setValue, onBlur, addPressed}) => {
 
     !!onBlur && onBlur();
   };
+
+  useBackAction(onBlur);
 
   return (
     <View style={[styles.container, {height: value?.length === 0 ? 50 : 300}]}>
