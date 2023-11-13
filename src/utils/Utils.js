@@ -20,7 +20,7 @@ export const calcPrecipitation = forecastData => {
   return valueToPercentage;
 };
 
-export const getTemps = async (mockPlaces, setYourPlaces, tempUnit) => {
+export const getTemps = async (mockPlaces, setYourPlaces, tempUnit, cb) => {
   const places = [...mockPlaces];
 
   const promises = mockPlaces.map(async item => {
@@ -42,6 +42,7 @@ export const getTemps = async (mockPlaces, setYourPlaces, tempUnit) => {
   });
 
   setYourPlaces(places);
+  !!cb && cb();
 };
 
 export const getWeatherIconFromCode = (code, time) => {
