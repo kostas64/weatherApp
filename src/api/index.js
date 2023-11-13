@@ -1,3 +1,5 @@
+const greekUtils = require('greek-utils');
+
 export const getForecast = async (selectedPlace, tempUnit) => {
   const lat = selectedPlace?.latitude;
   const lon = selectedPlace?.longitude;
@@ -40,4 +42,26 @@ export const getYourPlacesTemp = async (place, tempUnit) => {
 
   const data = await res.json();
   return data;
+};
+
+export const getCityFromCoords = async coords => {
+  const KEY = 'e9f8c3946f4e4aa0bc8aa0f25c3d2acf';
+  const lat = coords?.latitude;
+  const lon = coords?.longitude;
+
+  let url = `https://api.geoapify.com/v1/geocode/reverse?lang=en&lat=${lat}&lon=${lon}&format=json&apiKey=${KEY}`;
+
+  const res = await fetch(url, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  });
+
+  const data = await res.json();
+
+  const city = data?.results?.[0]?.city;
+
+  return greekUtils.toGreeklish(city);
 };
