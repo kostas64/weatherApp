@@ -35,8 +35,12 @@
 			</dict>
 		</dict>
 	</dict>
+  <key>NSLocationAlwaysUsageDescription</key>
+  <string>WeatherApp needs your location to display more accurate forecast.</string>
+  <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+  <string>WeatherApp needs your location to display more accurate forecast.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>WeatherApp needs your location to display more accurate forecast.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Gilroy-Black.ttf</string>
