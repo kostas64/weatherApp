@@ -1,7 +1,6 @@
 import React from 'react';
-import {FlashList} from '@shopify/flash-list';
-import {View, StyleSheet, InteractionManager} from 'react-native';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import {View, StyleSheet, InteractionManager, FlatList} from 'react-native';
 
 import {Context} from '../context/Context';
 import TodayForecastItem from './TodayForecastItem';
@@ -60,11 +59,10 @@ const TodayForecast = ({data, onPress, onPressBack}) => {
 
       {/*Today Forecast  */}
       {weatherCodeData?.length > 0 && (
-        <FlashList
+        <FlatList
           ref={listRef}
           horizontal
           data={weatherCodeData}
-          estimatedItemSize={80}
           renderItem={renderItem}
           showsHorizontalScrollIndicator={false}
           ItemSeparatorComponent={Separator}
