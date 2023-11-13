@@ -10,13 +10,11 @@ import {Text, StyleSheet, Image, TouchableOpacity, View} from 'react-native';
 import {colors} from '../assets/colors';
 import SearchInput from './SearchInput';
 import {images} from '../assets/images';
-import AnimatedFade from './AnimatedFade';
 import {WIDTH, isIOS} from '../assets/constants';
 
 const Header = React.forwardRef(
   (
     {
-      animated,
       label,
       leftIcon,
       leftIconStyle,
@@ -64,12 +62,8 @@ const Header = React.forwardRef(
 
     const onLeftIconPress = searchPressed ? onBlurSearch : onPressLeftIcon;
 
-    const Wrapper = animated ? AnimatedFade : View;
-
     return (
-      <Wrapper
-        style={[styles.container, {paddingTop}]}
-        containerStyle={[styles.container, {paddingTop}]}>
+      <View style={[styles.container, {paddingTop}]}>
         {/* Left icon */}
         {!!leftIcon && (
           <TouchableOpacity
@@ -110,7 +104,7 @@ const Header = React.forwardRef(
         ) : (
           <View style={styles.emptyBox} />
         )}
-      </Wrapper>
+      </View>
     );
   },
 );

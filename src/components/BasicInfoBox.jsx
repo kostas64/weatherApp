@@ -4,22 +4,11 @@ import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 import {images} from '../assets/images';
 import {colors} from '../assets/colors';
-import AnimatedFade from './AnimatedFade';
 import BasicInfoBoxItem from './BasicInfoBoxItem';
 
-const BasicInfoBox = ({
-  animated,
-  precipitation,
-  humidity,
-  windSpeed,
-  containerStyle,
-}) => {
-  const Wrapper = animated ? AnimatedFade : View;
-
+const BasicInfoBox = ({precipitation, humidity, windSpeed, containerStyle}) => {
   return (
-    <Wrapper
-      containerStyle={[styles.container, containerStyle]}
-      style={[styles.container, containerStyle]}>
+    <View style={[styles.container, containerStyle]}>
       <BasicInfoBoxItem
         icon={images.umbrella}
         value={`${precipitation}%`}
@@ -36,7 +25,7 @@ const BasicInfoBox = ({
         label={'Wind Speed'}
         tintColor={'white'}
       />
-    </Wrapper>
+    </View>
   );
 };
 

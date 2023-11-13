@@ -1,15 +1,13 @@
 import React from 'react';
 import {runOnJS} from 'react-native-reanimated';
-import {StyleSheet, View, FlatList} from 'react-native';
+import {StyleSheet, FlatList} from 'react-native';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
-import AnimatedFade from './AnimatedFade';
 import {Context} from '../context/Context';
 import YourPlacesItem from './YourPlacesItem';
 import YourPlacesListHeader from './YourPlacesListHeader';
 
 const YourPlaces = ({
-  animated,
   onPressAdd,
   closeButton,
   longPressActivated,
@@ -39,10 +37,8 @@ const YourPlaces = ({
     runOnJS(setLoadingApi)({api1: false, api2: false});
   };
 
-  const Wrapper = animated ? AnimatedFade : View;
-
   return (
-    <Wrapper>
+    <>
       {/* List Header */}
       <YourPlacesListHeader onPressAdd={onPressAdd} />
 
@@ -56,7 +52,7 @@ const YourPlaces = ({
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.listContainer}
       />
-    </Wrapper>
+    </>
   );
 };
 

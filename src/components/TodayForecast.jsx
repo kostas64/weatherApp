@@ -3,7 +3,6 @@ import {View, StyleSheet} from 'react-native';
 import {FlashList} from '@shopify/flash-list';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
-import AnimatedFade from './AnimatedFade';
 import {Context} from '../context/Context';
 import TodayForecastItem from './TodayForecastItem';
 import {findFirstFutureIndex} from '../utils/Utils';
@@ -53,7 +52,7 @@ const TodayForecast = ({data, onPress, onPressBack}) => {
   }, [timeData, weatherCodeData, selectedPlace]);
 
   return (
-    <AnimatedFade>
+    <>
       {/*List Header */}
       <ListHeader />
 
@@ -70,7 +69,7 @@ const TodayForecast = ({data, onPress, onPressBack}) => {
           contentContainerStyle={styles.listContainer}
         />
       )}
-    </AnimatedFade>
+    </>
   );
 };
 

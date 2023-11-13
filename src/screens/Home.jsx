@@ -87,7 +87,7 @@ const Home = () => {
   }
 
   return (
-    <View style={styles.container}>
+    <AnimatedFade containerStyle={styles.container}>
       {/* Header */}
       <Animated.View style={animStyle}>
         <Header
@@ -114,23 +114,22 @@ const Home = () => {
           <RefreshControl refreshing={loadingApi} onRefresh={onRefresh} />
         }>
         {/* Button when place is not in "Your Places" */}
-        <AnimatedFade containerStyle={{zIndex: 100}}>
+        <View style={{zIndex: 100}}>
           <AddButton />
-        </AnimatedFade>
+        </View>
 
         {/* Temperature */}
-        <AnimatedFade containerStyle={styles.temperatureContainer}>
+        <View style={styles.temperatureContainer}>
           <Temperature
             weather={weatherData?.description}
             animation={weatherData?.icon}
             temperature={Math.floor(forecastData?.current?.temperature_2m)}
           />
-        </AnimatedFade>
+        </View>
 
         {/* Basic info box */}
         <View style={styles.basicInfoContainer}>
           <BasicInfoBox
-            animated
             precipitation={calcPrecipitation(forecastData)}
             humidity={Math.floor(forecastData?.current?.relativehumidity_2m)}
             windSpeed={Math.floor(forecastData?.current?.windspeed_10m)}
@@ -147,13 +146,12 @@ const Home = () => {
         {/* Other Cities */}
 
         <YourPlaces
-          animated
           onPressAdd={onPressAdd}
           longPressActivated={longPressActivated}
           setLongPressActivated={setLongPressActivated}
         />
       </Animated.ScrollView>
-    </View>
+    </AnimatedFade>
   );
 };
 
