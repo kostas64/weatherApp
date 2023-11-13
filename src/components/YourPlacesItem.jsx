@@ -7,8 +7,8 @@ import Animated, {
 
 import React from 'react';
 import LottieView from 'lottie-react-native';
+import {View, StyleSheet, Text} from 'react-native';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
-import {View, StyleSheet, InteractionManager, Text} from 'react-native';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 import CText from './Text';
@@ -98,7 +98,6 @@ const YourPlacesItem = ({
   const longPressGesture = Gesture.LongPress()
     .minDuration(300)
     .onStart(() => {
-      console.log('Run long');
       runOnJS(setLongPressActivated)(true);
     })
     .onFinalize(() => {
@@ -106,12 +105,8 @@ const YourPlacesItem = ({
     });
 
   React.useEffect(() => {
-    const interaction = InteractionManager.runAfterInteractions(() => {
-      itemRef.current?.play();
-    });
-
-    return () => interaction.cancel();
-  }, []);
+    itemRef.current?.play();
+  });
 
   return (
     <>
