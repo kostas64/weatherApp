@@ -63,7 +63,6 @@ const styles = StyleSheet.create({
     borderRadius: wp(6),
     alignItems: 'center',
     paddingVertical: wp(4),
-
     backgroundColor: colors.darkBg,
   },
   lottie: {

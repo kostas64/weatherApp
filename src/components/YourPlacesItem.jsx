@@ -110,11 +110,6 @@ const YourPlacesItem = ({
 
   return (
     <>
-      <RemoveButton
-        onPress={onPressRemove}
-        closeButton={closeButton}
-        itemPressed={longPressActivated}
-      />
       <GestureDetector gesture={Gesture.Race(tapGesture, longPressGesture)}>
         <View style={styles.row}>
           <Animated.View key={index} style={[styles.container, itemAnimStyle]}>
@@ -144,6 +139,11 @@ const YourPlacesItem = ({
           <Animated.View style={itemSepAnimStyle} />
         </View>
       </GestureDetector>
+      <RemoveButton
+        onPress={onPressRemove}
+        closeButton={closeButton}
+        itemPressed={longPressActivated}
+      />
     </>
   );
 };

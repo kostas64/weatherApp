@@ -28,14 +28,17 @@ const TodayForecast = ({data, onPress, onPressBack}) => {
     [onPress, onPressBack],
   );
 
-  const renderItem = ({item, index}) => (
-    <TodayForecastItem
-      index={index}
-      item={item}
-      timeData={timeData}
-      indexToScroll={indexToScroll}
-      temperatureData={temperatureData}
-    />
+  const renderItem = React.useCallback(
+    ({item, index}) => (
+      <TodayForecastItem
+        index={index}
+        item={item}
+        timeData={timeData}
+        indexToScroll={indexToScroll}
+        temperatureData={temperatureData}
+      />
+    ),
+    [],
   );
 
   React.useEffect(() => {
@@ -62,6 +65,12 @@ const TodayForecast = ({data, onPress, onPressBack}) => {
         <FlatList
           ref={listRef}
           horizontal
+          getItemLayout={(_, index) => ({
+            index,
+            length: 64,
+            offset: 64 * index,
+          })}
+          keyExtractor={(_, index) => `$$${index}`}
           data={weatherCodeData}
           renderItem={renderItem}
           showsHorizontalScrollIndicator={false}
