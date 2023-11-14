@@ -157,7 +157,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     flexDirection: 'row',
     alignItems: 'center',
-    overflow: 'hidden',
     backgroundColor: colors.darkBg,
   },
   lottie: {

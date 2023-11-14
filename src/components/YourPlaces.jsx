@@ -15,16 +15,19 @@ const YourPlaces = ({
 }) => {
   const {yourPlaces, setLoadingApi, setYourPlaces} = React.useContext(Context);
 
-  const renderItem = ({item, index}) => (
-    <YourPlacesItem
-      key={index}
-      item={item}
-      index={index}
-      closeButton={closeButton}
-      onDismissItem={onDismissItem}
-      longPressActivated={longPressActivated}
-      setLongPressActivated={setLongPressActivated}
-    />
+  const renderItem = React.useCallback(
+    ({item, index}) => (
+      <YourPlacesItem
+        key={index}
+        item={item}
+        index={index}
+        closeButton={closeButton}
+        onDismissItem={onDismissItem}
+        longPressActivated={longPressActivated}
+        setLongPressActivated={setLongPressActivated}
+      />
+    ),
+    [longPressActivated],
   );
 
   const onDismissItem = item => {
@@ -49,6 +52,13 @@ const YourPlaces = ({
         scrollEnabled={true}
         style={{height: 116}}
         renderItem={renderItem}
+        initialNumToRender={2}
+        keyExtractor={(_, index) => `$${index}`}
+        getItemLayout={(_, index) => ({
+          length: 294,
+          offset: index * 294,
+          index,
+        })}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.listContainer}
       />
