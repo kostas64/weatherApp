@@ -1,8 +1,7 @@
 import Animated, {
-  withSpring,
+  withTiming,
   useSharedValue,
   useAnimatedStyle,
-  withTiming,
 } from 'react-native-reanimated';
 
 import React from 'react';
@@ -18,8 +17,6 @@ const options = {
 const AnimTouch = Animated.createAnimatedComponent(TouchableOpacity);
 
 const RemoveButton = ({onPress, itemPressed}) => {
-  const posTop = useSharedValue(16);
-  const posRight = useSharedValue(20);
   const lineWidth = useSharedValue(0);
   const circleWidth = useSharedValue(0);
   const circleHeight = useSharedValue(0);
@@ -27,31 +24,28 @@ const RemoveButton = ({onPress, itemPressed}) => {
   const isOpen =
     lineWidth.value === 10 &&
     circleHeight.value === 24 &&
-    circleWidth.value === 24 &&
-    posTop.value === 4 &&
-    posRight.value === 14;
+    circleWidth.value === 24;
 
   const isClosed =
     lineWidth.value === 0 &&
     circleHeight.value === 0 &&
-    circleWidth.value === 0 &&
-    posTop.value === 16 &&
-    posRight.value === 20;
+    circleWidth.value === 0;
 
   const containerAnimStyle = useAnimatedStyle(() => ({
     height: circleHeight.value,
     width: circleWidth.value,
-    right: posRight.value,
-    top: posTop.value,
   }));
 
   const lineAnimStyle = useAnimatedStyle(() => ({
     width: lineWidth.value,
   }));
 
+  const onPressRemove = () => {
+    closeButton();
+    onPress();
+  };
+
   const closeButton = () => {
-    posTop.value = withTiming(16, {duration: 150});
-    posRight.value = withTiming(20, {duration: 150});
     lineWidth.value = withTiming(0, {duration: 150});
     circleWidth.value = withTiming(0, {duration: 150});
     circleHeight.value = withTiming(0, {duration: 150});
@@ -59,15 +53,13 @@ const RemoveButton = ({onPress, itemPressed}) => {
 
   const animateButton = () => {
     if (isClosed) {
-      posTop.value = withSpring(4);
-      posRight.value = withSpring(14);
-      lineWidth.value = withSpring(10);
-      circleWidth.value = withSpring(24);
-      circleHeight.value = withSpring(24);
-      ReactNativeHapticFeedback.trigger('impactHeavy', options);
+      lineWidth.value = withTiming(10, {duration: 300});
+      circleWidth.value = withTiming(24, {duration: 300});
+      circleHeight.value = withTiming(24, {duration: 300});
+      ReactNativeHapticFeedback.trigger('impactMedium', options);
     } else if (isOpen) {
       closeButton();
-      ReactNativeHapticFeedback.trigger('impactHeavy', options);
+      ReactNativeHapticFeedback.trigger('impactMedium', options);
     }
   };
 
@@ -77,11 +69,8 @@ const RemoveButton = ({onPress, itemPressed}) => {
 
   return (
     <AnimTouch
+      onPress={onPressRemove}
       hitSlop={styles.hitSlop}
-      onPress={() => {
-        closeButton();
-        onPress();
-      }}
       style={[styles.container, containerAnimStyle]}>
       <Animated.View style={[styles.line, lineAnimStyle]} />
     </AnimTouch>
@@ -96,6 +85,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: wp(6),
     zIndex: 11111,
+    right: 8,
+    top: 4,
   },
   line: {
     height: 1,
