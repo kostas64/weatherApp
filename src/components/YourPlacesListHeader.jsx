@@ -5,14 +5,21 @@ import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 import CText from './Text';
 import {images} from '../assets/images';
+import {Context} from '../context/Context';
 
 const YourPlacesListHeader = ({onPressAdd}) => {
+  const {yourPlaces} = React.useContext(Context);
+
   return (
     <View style={styles.container}>
       <CText>Your Places</CText>
-      <TouchableOpacity onPress={onPressAdd} hitSlop={styles.hitSlop}>
-        <Image source={images.cross} style={styles.img} />
-      </TouchableOpacity>
+      {yourPlaces?.length < 10 ? (
+        <TouchableOpacity onPress={onPressAdd} hitSlop={styles.hitSlop}>
+          <Image source={images.cross} style={styles.img} />
+        </TouchableOpacity>
+      ) : (
+        <CText>Max 10 places</CText>
+      )}
     </View>
   );
 };

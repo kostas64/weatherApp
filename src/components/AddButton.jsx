@@ -47,6 +47,7 @@ const AddButton = () => {
   }));
 
   if (itemExistInFavourite) return;
+  if (itemExistInFavourite || yourPlaces.length >= 10) return;
 
   return (
     <AnimTouchable
