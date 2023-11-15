@@ -55,7 +55,7 @@ const ToastProvider = ({children}) => {
       {children}
       <Animated.View style={[animStyle, styles.container]}>
         <BlurView
-          blurAmount={isIOS ? 8 : 24}
+          blurAmount={8}
           overlayColor={'#00000000'}
           blurType={isIOS ? 'extraDark' : 'xlight'}
           reducedTransparencyFallbackColor="rgba(37,42,54,.25)"
