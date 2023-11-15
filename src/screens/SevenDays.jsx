@@ -1,11 +1,11 @@
 import React from 'react';
-import {View, StyleSheet, ScrollView, BackHandler} from 'react-native';
+import {View, StyleSheet, ScrollView} from 'react-native';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 import {images} from '../assets/images';
 import {colors} from '../assets/colors';
 import Header from '../components/Header';
-import {isIOS} from '../assets/constants';
+import useBackAction from '../hooks/useBackAction';
 import TomorrowBox from '../components/TomorrowBox';
 import TomorrowList from '../components/TomorrowList';
 import CustomBottomSheet from '../components/CustomBottomSheet';
@@ -26,34 +26,21 @@ const SevenDays = ({navigation, route}) => {
     ],
   };
 
-  const onPressLeftIcon = () => {
+  const onPressLeftIcon = React.useCallback(() => {
     !!onPressBack && onPressBack();
     navigation.pop();
-  };
+  }, []);
 
   const onCloseBottomSheet = React.useCallback(() => {
     setModalContent(null);
     !!bottomSheetRef?.current && bottomSheetRef?.current?.close();
   }, []);
 
-  React.useEffect(() => {
-    if (isIOS) return;
-
-    const backAction = () => {
-      onPressBack();
-    };
-
-    const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      backAction,
-    );
-
-    return () => backHandler.remove();
-  }, []);
-
   if (modalContent) {
     bottomSheetRef.current.expand();
   }
+
+  useBackAction(onPressLeftIcon);
 
   return (
     <>
