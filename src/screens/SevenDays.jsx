@@ -1,4 +1,5 @@
 import React from 'react';
+import {Directions} from 'react-native-gesture-handler';
 import {View, StyleSheet, ScrollView} from 'react-native';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
@@ -8,6 +9,7 @@ import Header from '../components/Header';
 import useBackAction from '../hooks/useBackAction';
 import TomorrowBox from '../components/TomorrowBox';
 import TomorrowList from '../components/TomorrowList';
+import GestureHandler from '../components/GestureLeftHandler';
 import CustomBottomSheet from '../components/CustomBottomSheet';
 
 const SevenDays = ({navigation, route}) => {
@@ -45,21 +47,28 @@ const SevenDays = ({navigation, route}) => {
   return (
     <>
       <ScrollView nestedScrollEnabled showsVerticalScrollIndicator={false}>
-        {/* Header */}
-        <Header
-          label={'6 Days'}
-          leftIcon={images.arrow}
-          leftIconStyle={leftIconStyle}
-          onPressLeft={onPressLeftIcon}
-        />
+        <GestureHandler
+          activeOffsetX={[-10, 10]}
+          direction={Directions.RIGHT}
+          onSwipeAction={onPressLeftIcon}>
+          <View style={styles.flex}>
+            {/* Header */}
+            <Header
+              label={'6 Days'}
+              leftIcon={images.arrow}
+              leftIconStyle={leftIconStyle}
+              onPressLeft={onPressLeftIcon}
+            />
 
-        {/* Tomorrow Box */}
-        <View style={styles.tomorrowContainer}>
-          <TomorrowBox setModalContent={setModalContent} />
-        </View>
+            {/* Tomorrow Box */}
+            <View style={styles.tomorrowContainer}>
+              <TomorrowBox setModalContent={setModalContent} />
+            </View>
 
-        {/* 5 days forecast */}
-        <TomorrowList setModalContent={setModalContent} />
+            {/* 5 days forecast */}
+            <TomorrowList setModalContent={setModalContent} />
+          </View>
+        </GestureHandler>
       </ScrollView>
       <CustomBottomSheet
         ref={bottomSheetRef}

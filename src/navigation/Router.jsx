@@ -14,6 +14,11 @@ const Router = () => {
     animation: 'fade',
   };
 
+  const screenOptions = {
+    headerShown: false,
+    gestureEnabled: false,
+  };
+
   const {forecastData} = React.useContext(Context);
   const dataCode = forecastData?.current?.weathercode;
   const weatherData = getWeatherIconFromCode(dataCode);
@@ -23,10 +28,7 @@ const Router = () => {
       {/* Set app background globally */}
       <Background weatherCode={weatherData?.img} />
 
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}>
+      <Stack.Navigator screenOptions={screenOptions}>
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen
           name="SevenDays"
