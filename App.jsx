@@ -6,6 +6,7 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import Router from './src/navigation/Router';
 import ContextProvider from './src/context/Context';
 import {hideSplash, navTheme} from './src/utils/Utils';
+import ToastProvider from './src/context/ToastContext';
 import StatusBarManager from './src/components/StatusBarManager';
 
 export const storage = new MMKVLoader().initialize();
@@ -15,9 +16,11 @@ const App = () => {
     <GestureHandlerRootView style={{flex: 1}}>
       <NavigationContainer theme={navTheme} onReady={hideSplash}>
         <StatusBarManager>
-          <ContextProvider>
-            <Router />
-          </ContextProvider>
+          <ToastProvider>
+            <ContextProvider>
+              <Router />
+            </ContextProvider>
+          </ToastProvider>
         </StatusBarManager>
       </NavigationContainer>
     </GestureHandlerRootView>
