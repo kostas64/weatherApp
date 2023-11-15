@@ -5,12 +5,11 @@ import {
 
 import React from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {Text, StyleSheet, Image, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Image, TouchableOpacity, View} from 'react-native';
 
 import {colors} from '../assets/colors';
 import SearchInput from './SearchInput';
 import {images} from '../assets/images';
-import {WIDTH, isIOS} from '../assets/constants';
 
 const Header = React.forwardRef(
   (
@@ -81,20 +80,14 @@ const Header = React.forwardRef(
         )}
 
         {/* City name */}
-        {!searchPressed ? (
-          <Text
-            numberOfLines={1}
-            style={[styles.label, isIOS && styles.lineHeight]}>
-            {label}
-          </Text>
-        ) : (
-          <SearchInput
-            value={value}
-            setValue={setValue}
-            onBlur={onBlurSearch}
-            addPressed={addPressed}
-          />
-        )}
+        <SearchInput
+          label={label}
+          value={value}
+          setValue={setValue}
+          onBlur={onBlurSearch}
+          addPressed={addPressed}
+          searchPressed={searchPressed}
+        />
 
         {/* Right icon */}
         {!searchPressed && !!rightIcon ? (
@@ -115,14 +108,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: wp(6),
   },
-  label: {
-    color: 'white',
-    fontSize: wp(4.5),
-    textAlign: 'center',
-    fontFamily: 'Gilroy-Bold',
-    textAlignVertical: 'center',
-    width: WIDTH - 146,
-  },
   iconContainer: {
     width: wp(10),
     height: wp(10),
@@ -141,9 +126,6 @@ const styles = StyleSheet.create({
     tintColor: 'white',
     width: wp(5),
     height: wp(5),
-  },
-  lineHeight: {
-    lineHeight: 56,
   },
   emptyBox: {
     width: wp(10),

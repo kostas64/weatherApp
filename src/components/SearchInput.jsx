@@ -7,10 +7,18 @@ import CText from './Text';
 import {query} from '../utils/Utils';
 import {lottie} from '../assets/lottie';
 import {Context} from '../context/Context';
+import {WIDTH, isIOS} from '../assets/constants';
 import ClearInputButton from './ClearInputButton';
 import useBackAction from '../hooks/useBackAction';
 
-const SearchInput = ({value, setValue, onBlur, addPressed}) => {
+const SearchInput = ({
+  value,
+  label,
+  searchPressed,
+  setValue,
+  onBlur,
+  addPressed,
+}) => {
   const ref = React.useRef();
   const {setSelectedPlace, yourPlaces, setYourPlaces} =
     React.useContext(Context);
@@ -89,7 +97,20 @@ const SearchInput = ({value, setValue, onBlur, addPressed}) => {
     !!onBlur && onBlur();
   };
 
+  //Blur screen to go back when Android hardBack pressed
   useBackAction(onBlur);
+
+  //Show city name if you
+  //are not in search screen
+  if (!searchPressed) {
+    return (
+      <CText
+        numberOfLines={1}
+        style={[styles.label, isIOS && styles.lineHeight]}>
+        {label}
+      </CText>
+    );
+  }
 
   return (
     <View style={[styles.container, {height: value?.length === 0 ? 50 : 300}]}>
@@ -126,6 +147,17 @@ const styles = StyleSheet.create({
   },
   rowContainer: {
     marginVertical: wp(1),
+  },
+  lineHeight: {
+    lineHeight: 56,
+  },
+  label: {
+    color: 'white',
+    fontSize: wp(4.5),
+    textAlign: 'center',
+    fontFamily: 'Gilroy-Bold',
+    textAlignVertical: 'center',
+    width: WIDTH - 146,
   },
 });
 
