@@ -144,7 +144,6 @@ const Home = () => {
         />
 
         {/* Other Cities */}
-
         <YourPlaces
           onPressAdd={onPressAdd}
           longPressActivated={longPressActivated}
