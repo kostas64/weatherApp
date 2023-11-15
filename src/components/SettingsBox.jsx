@@ -31,7 +31,7 @@ const SettingsBox = React.forwardRef((_, ref) => {
     };
   });
 
-  const onPress = unit => {
+  const onPress = React.useCallback(unit => {
     if (isCelsius && unit === 'c') {
       return;
     }
@@ -42,15 +42,15 @@ const SettingsBox = React.forwardRef((_, ref) => {
 
     animateClosing();
     setIsCelsius(unit === 'c' ? true : false);
-  };
+  }, []);
 
-  const animateClosing = () => {
+  const animateClosing = React.useCallback(() => {
     opacity.value = withTiming(0, {duration: 250});
-  };
+  }, []);
 
-  const animateOpening = () => {
+  const animateOpening = React.useCallback(() => {
     opacity.value = withTiming(1, {duration: 250});
-  };
+  }, []);
 
   return (
     <Animated.View style={[styles.container, animStyle]}>

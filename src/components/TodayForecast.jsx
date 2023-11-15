@@ -42,8 +42,10 @@ const TodayForecast = ({data, onPress, onPressBack}) => {
   );
 
   React.useEffect(() => {
+    let interaction;
+
     if (indexToScroll > 0 && weatherCodeData?.length > 0) {
-      InteractionManager.runAfterInteractions(() => {
+      interaction = InteractionManager.runAfterInteractions(() => {
         //750 because 250delay + 500duration of FadeInDown anim
         setTimeout(() => {
           listRef?.current?.scrollToOffset({
@@ -53,6 +55,8 @@ const TodayForecast = ({data, onPress, onPressBack}) => {
         }, 750);
       });
     }
+
+    return () => interaction.cancel();
   }, [timeData, weatherCodeData, selectedPlace]);
 
   return (

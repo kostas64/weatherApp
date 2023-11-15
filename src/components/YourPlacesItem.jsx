@@ -40,13 +40,13 @@ const YourPlacesItem = ({
 
   const {selectedPlace, setSelectedPlace} = React.useContext(Context);
 
-  const onItemPress = () => {
+  const onItemPress = React.useCallback(() => {
     if (selectedPlace.city !== item.city) {
       setSelectedPlace(item);
     }
-  };
+  }, []);
 
-  const onPressRemove = () => {
+  const onPressRemove = React.useCallback(() => {
     paddingLeft.value = 0;
     paddingRight.value = 0;
     spaceLeft.value = 0;
@@ -60,7 +60,7 @@ const YourPlacesItem = ({
         onDismissItem(item);
       }
     });
-  };
+  }, []);
 
   const itemAnimStyle = useAnimatedStyle(() => ({
     opacity: itemOpacity.value,
@@ -170,4 +170,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default YourPlacesItem;
+export default React.memo(YourPlacesItem);

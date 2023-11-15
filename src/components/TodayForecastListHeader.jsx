@@ -10,13 +10,13 @@ import {images} from '../assets/images';
 const TodayForecastListHeader = ({onPress, onPressBack}) => {
   const navigation = useNavigation();
 
-  const onPressForecast = () => {
+  const onPressForecast = React.useCallback(() => {
     !!onPress && onPress();
 
     navigation.navigate('SevenDays', {
       onPressBack,
     });
-  };
+  }, [onPress, onPressBack]);
 
   return (
     <View style={styles.container}>

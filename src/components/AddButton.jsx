@@ -31,6 +31,12 @@ const AddButton = () => {
     place => place.city === selectedPlace.city,
   );
 
+  const animStyle = useAnimatedStyle(() => ({
+    opacity: opacity.value,
+  }));
+
+  if (itemExistInFavourite || yourPlaces.length >= 10) return;
+
   const animateButton = () => {
     setToast({city: selectedPlace.city, top: insets.top});
 
@@ -47,12 +53,6 @@ const AddButton = () => {
 
     setYourPlaces(old => [newPlace, ...old]);
   };
-
-  const animStyle = useAnimatedStyle(() => ({
-    opacity: opacity.value,
-  }));
-
-  if (itemExistInFavourite || yourPlaces.length >= 10) return;
 
   return (
     <AnimTouchable

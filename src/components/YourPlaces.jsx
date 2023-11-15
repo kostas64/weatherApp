@@ -30,7 +30,7 @@ const YourPlaces = ({
     [longPressActivated],
   );
 
-  const onDismissItem = item => {
+  const onDismissItem = React.useCallback(item => {
     'worklet';
     runOnJS(setLoadingApi)({api1: true, api2: false});
 
@@ -38,7 +38,7 @@ const YourPlaces = ({
     runOnJS(setYourPlaces)(filteredPlaces);
 
     runOnJS(setLoadingApi)({api1: false, api2: false});
-  };
+  }, []);
 
   return (
     <>
