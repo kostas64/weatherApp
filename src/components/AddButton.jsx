@@ -11,16 +11,20 @@ import {
 
 import React from 'react';
 import {Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {images} from '../assets/images';
 import {colors} from '../assets/colors';
 import {lottie} from '../assets/lottie';
 import {Context} from '../context/Context';
+import {ToastContext} from '../context/ToastContext';
 
 const AnimTouchable = Animated.createAnimatedComponent(TouchableOpacity);
 
 const AddButton = () => {
+  const insets = useSafeAreaInsets();
   const opacity = useSharedValue(1);
+  const {setToast} = React.useContext(ToastContext);
   const {yourPlaces, selectedPlace, setYourPlaces} = React.useContext(Context);
 
   const itemExistInFavourite = yourPlaces.some(
@@ -28,6 +32,8 @@ const AddButton = () => {
   );
 
   const animateButton = () => {
+    setToast({city: selectedPlace.city, top: insets.top});
+
     opacity.value = withTiming(0, {duration: 650});
 
     const newPlace = {
@@ -46,7 +52,6 @@ const AddButton = () => {
     opacity: opacity.value,
   }));
 
-  if (itemExistInFavourite) return;
   if (itemExistInFavourite || yourPlaces.length >= 10) return;
 
   return (

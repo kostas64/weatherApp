@@ -1,5 +1,6 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 
@@ -10,6 +11,7 @@ import {Context} from '../context/Context';
 import {WIDTH, isIOS} from '../assets/constants';
 import ClearInputButton from './ClearInputButton';
 import useBackAction from '../hooks/useBackAction';
+import {ToastContext} from '../context/ToastContext';
 
 const SearchInput = ({
   value,
@@ -20,6 +22,8 @@ const SearchInput = ({
   addPressed,
 }) => {
   const ref = React.useRef();
+  const insets = useSafeAreaInsets();
+  const {setToast} = React.useContext(ToastContext);
   const {setSelectedPlace, yourPlaces, setYourPlaces} =
     React.useContext(Context);
 
@@ -79,8 +83,13 @@ const SearchInput = ({
           temperature: 10, //So to create the field
           desc: 'Mostly Sunny', //Will be calculated from api
         };
+
         setYourPlaces(old => [newPlace, ...old]);
         setSelectedPlace(newPlace);
+
+        setTimeout(() => {
+          setToast({city: details?.name, top: insets.top});
+        }, 1500);
       } else {
         setSelectedPlace(yourPlaces?.[placeIndex]);
       }
