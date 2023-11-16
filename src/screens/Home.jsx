@@ -11,6 +11,7 @@ import {RefreshControl, View, StyleSheet} from 'react-native';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 import {images} from '../assets/images';
+import {colors} from '../assets/colors';
 import Header from '../components/Header';
 import {Context} from '../context/Context';
 import Loading from '../components/Loading';
@@ -69,6 +70,16 @@ const Home = () => {
     placesApi();
   };
 
+  const refreshControl = (
+    <RefreshControl
+      onRefresh={onRefresh}
+      refreshing={loadingApi}
+      tintColor={'white'}
+      colors={[colors.darkBgFull]}
+      progressBackgroundColor={'white'}
+    />
+  );
+
   const animStyle = useAnimatedStyle(() => ({
     opacity: opacityHeader.value,
   }));
@@ -110,9 +121,7 @@ const Home = () => {
       <Animated.ScrollView
         style={animScrollStyle}
         showsVerticalScrollIndicator={false}
-        refreshControl={
-          <RefreshControl refreshing={loadingApi} onRefresh={onRefresh} />
-        }>
+        refreshControl={refreshControl}>
         {/* Button when place is not in "Your Places" */}
         <View style={{zIndex: 100}}>
           <AddButton />
