@@ -52,7 +52,7 @@ const TodayForecast = ({data, onPress, onPressBack}) => {
             offset: indexToScroll * 80,
             animated: true,
           });
-        }, 750);
+        }, 850);
       });
     }
 
