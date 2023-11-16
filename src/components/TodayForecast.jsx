@@ -56,7 +56,7 @@ const TodayForecast = ({data, onPress, onPressBack}) => {
       });
     }
 
-    return () => interaction.cancel();
+    return () => interaction?.cancel();
   }, [timeData, weatherCodeData, selectedPlace]);
 
   return (
