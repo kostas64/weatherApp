@@ -27,18 +27,23 @@ const YourPlaces = ({
         setLongPressActivated={setLongPressActivated}
       />
     ),
-    [longPressActivated],
+    [closeButton, onDismissItem, longPressActivated, setLongPressActivated],
   );
 
-  const onDismissItem = React.useCallback(item => {
-    'worklet';
-    runOnJS(setLoadingApi)({api1: true, api2: false});
+  const onDismissItem = React.useCallback(
+    item => {
+      'worklet';
+      runOnJS(setLoadingApi)({api1: true, api2: false});
 
-    const filteredPlaces = yourPlaces.filter(place => place.city !== item.city);
-    runOnJS(setYourPlaces)(filteredPlaces);
+      const filteredPlaces = yourPlaces.filter(
+        place => place.city !== item.city,
+      );
+      runOnJS(setYourPlaces)(filteredPlaces);
 
-    runOnJS(setLoadingApi)({api1: false, api2: false});
-  }, []);
+      runOnJS(setLoadingApi)({api1: false, api2: false});
+    },
+    [setLoadingApi, setYourPlaces, yourPlaces],
+  );
 
   return (
     <>
@@ -50,7 +55,7 @@ const YourPlaces = ({
         horizontal
         data={yourPlaces}
         scrollEnabled={true}
-        style={{height: 116}}
+        style={styles.listHeight}
         renderItem={renderItem}
         initialNumToRender={2}
         keyExtractor={(_, index) => `$${index}`}
@@ -70,6 +75,9 @@ const styles = StyleSheet.create({
   listContainer: {
     paddingHorizontal: wp(6),
     paddingBottom: wp(8),
+  },
+  listHeight: {
+    height: 116,
   },
 });
 

@@ -44,7 +44,7 @@ const YourPlacesItem = ({
     if (selectedPlace.city !== item.city) {
       setSelectedPlace(item);
     }
-  }, []);
+  }, [item, selectedPlace.city, setSelectedPlace]);
 
   const onPressRemove = React.useCallback(() => {
     paddingLeft.value = 0;
@@ -60,7 +60,19 @@ const YourPlacesItem = ({
         onDismissItem(item);
       }
     });
-  }, []);
+  }, [
+    item,
+    cityWidth,
+    spaceLeft,
+    spaceRight,
+    itemOpacity,
+    lottieWidth,
+    paddingLeft,
+    paddingRight,
+    itemSeparator,
+    onDismissItem,
+    containerWidth,
+  ]);
 
   const itemAnimStyle = useAnimatedStyle(() => ({
     opacity: itemOpacity.value,

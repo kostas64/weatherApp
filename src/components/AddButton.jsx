@@ -35,7 +35,9 @@ const AddButton = () => {
     opacity: opacity.value,
   }));
 
-  if (itemExistInFavourite || yourPlaces.length >= 10) return;
+  if (itemExistInFavourite || yourPlaces.length >= 10) {
+    return null;
+  }
 
   const animateButton = () => {
     setToast({city: selectedPlace.city, top: insets.top});

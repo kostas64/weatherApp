@@ -1,7 +1,10 @@
+/* eslint-disable react/no-unstable-nested-components */
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import BottomSheet, {BottomSheetBackdrop} from '@gorhom/bottom-sheet';
 import {useBottomSheetBackHandler} from '../hooks/useBottomSheetBackHandler';
+
+const Background = () => <View />;
 
 const CustomBottomSheet = React.forwardRef(
   ({modalContent, onCloseBottomSheet, snapPoints}, ref) => {
@@ -14,7 +17,7 @@ const CustomBottomSheet = React.forwardRef(
         onChange={handleSheetPositionChange}
         style={styles.container}
         onClose={onCloseBottomSheet}
-        backgroundComponent={() => <View />}
+        backgroundComponent={props => <Background {...props} />}
         backdropComponent={props => (
           <BottomSheetBackdrop
             {...props}

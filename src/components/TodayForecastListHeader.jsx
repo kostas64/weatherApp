@@ -16,7 +16,7 @@ const TodayForecastListHeader = ({onPress, onPressBack}) => {
     navigation.navigate('SevenDays', {
       onPressBack,
     });
-  }, [onPress, onPressBack]);
+  }, [onPress, onPressBack, navigation]);
 
   return (
     <View style={styles.container}>

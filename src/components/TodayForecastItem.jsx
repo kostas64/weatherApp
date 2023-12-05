@@ -25,7 +25,7 @@ const TodayForecastItem = ({
   React.useEffect(() => {
     let interaction;
 
-    if (!!icon) {
+    if (icon) {
       interaction = InteractionManager.runAfterInteractions(() => {
         itemRef.current?.play();
       });

@@ -52,12 +52,12 @@ const Header = React.forwardRef(
       !!onBlur && onBlur();
       setValue('');
       setSearchPressed(false);
-    }, [addPressed]);
+    }, [addPressed, onBlur]);
 
     const onPressLeftIcon = React.useCallback(() => {
       !!onPressLeft && onPressLeft();
       setSearchPressed(true);
-    }, []);
+    }, [onPressLeft]);
 
     const onLeftIconPress = searchPressed ? onBlurSearch : onPressLeftIcon;
 

@@ -40,7 +40,7 @@ const TomorrowBox = ({setModalContent}) => {
         tempMax={tempMaxForm}
       />,
     );
-  }, [data]);
+  }, [data, tempMinForm, tempMaxForm, setModalContent]);
 
   return (
     <Pressable onPress={onBoxPress} style={styles.container}>

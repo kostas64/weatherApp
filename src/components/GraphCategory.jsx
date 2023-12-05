@@ -17,8 +17,8 @@ const GraphCategory = ({selected, setSelected}) => {
   const listHeight = useSharedValue(0);
 
   const renderItem = ({item, index}) => {
-    const onItemSelect = item => {
-      setSelected(item);
+    const onItemSelect = selectedItem => {
+      setSelected(selectedItem);
       animateList();
     };
 

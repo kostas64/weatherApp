@@ -30,10 +30,10 @@ const Graph = ({allData, index, tempMin, tempMax}) => {
   const [selected, setSelected] = React.useState('Temperature');
 
   const formattedText = useDerivedValue(
-    () => ` ${!!animatedText.value ? animatedText.value : ''}`,
+    () => ` ${animatedText.value ? animatedText.value : ''}`,
   );
   const formattedRightText = useDerivedValue(
-    () => `${!!animatedRightText.value ? animatedRightText.value : ''}`,
+    () => `${animatedRightText.value ? animatedRightText.value : ''}`,
   );
 
   const graphValues = formatData(selected, allData, allData.time, index);
@@ -44,9 +44,9 @@ const Graph = ({allData, index, tempMin, tempMax}) => {
     const graphWidth = onLayout?.width - 37;
     const range = graphWidth / 24;
     const tap = e.absoluteX - 27;
-    const index = Math.floor(tap / range);
+    const indexToReturn = Math.floor(tap / range);
 
-    return index;
+    return indexToReturn;
   };
 
   const touchGesture = Gesture.Tap().onBegin(e => {
@@ -55,36 +55,37 @@ const Graph = ({allData, index, tempMin, tempMax}) => {
 
       runOnJS(setZ)(1);
 
-      const index = getIndex(e);
+      const indexRes = getIndex(e);
       animatedText.value = `${
-        typeof graphValues?.[index]?.y === 'number'
-          ? `${Math.floor(graphValues?.[index]?.y)}${getUnit(
+        typeof graphValues?.[indexRes]?.y === 'number'
+          ? `${Math.floor(graphValues?.[indexRes]?.y)}${getUnit(
               selected,
               false,
               true,
             )}`
           : ''
       }`;
-      animatedRightText.value = graphValues?.[index]?.time;
+      animatedRightText.value = graphValues?.[indexRes]?.time;
     });
   });
 
   const gesture = Gesture.Pan()
     .onChange(e => {
-      if (e.absoluteX >= 27 && e.absoluteX <= onLayout.width - 10)
+      if (e.absoluteX >= 27 && e.absoluteX <= onLayout.width - 10) {
         left.value = withTiming(e.absoluteX - 1, {duration: 1}); // 1 comes as result of devide of 2
+      }
 
-      const index = getIndex(e);
+      const indexRes = getIndex(e);
       animatedText.value = `${
-        typeof graphValues?.[index]?.y === 'number'
-          ? `${Math.floor(graphValues?.[index]?.y)}${getUnit(
+        typeof graphValues?.[indexRes]?.y === 'number'
+          ? `${Math.floor(graphValues?.[indexRes]?.y)}${getUnit(
               selected,
               false,
               true,
             )}`
           : ''
       }`;
-      animatedRightText.value = graphValues?.[index]?.time;
+      animatedRightText.value = graphValues?.[indexRes]?.time;
     })
     .onFinalize(() => {
       opacity.value = 0;
@@ -110,12 +111,12 @@ const Graph = ({allData, index, tempMin, tempMax}) => {
     width: onLayout?.width - 37,
   };
 
-  const colors = isIOS
+  const gradColors = isIOS
     ? [processColor('red'), processColor('blue')]
     : [processColor('blue'), processColor('red')];
 
   const fillGradient = {
-    colors,
+    colors: gradColors,
     positions: [0, 0.5],
     angle: 90,
     orientation: 'TOP_BOTTOM',
@@ -226,7 +227,7 @@ const Graph = ({allData, index, tempMin, tempMax}) => {
           />
 
           {/* Graph caption */}
-          <CText size={3.5} color="black" style={{alignSelf: 'center'}}>
+          <CText size={3.5} color="black" style={styles.selfCenter}>
             {`Drag graph to check ${selected?.toLowerCase()} per hour`}
           </CText>
         </View>
@@ -284,6 +285,9 @@ const styles = StyleSheet.create({
     top: 18,
     position: 'absolute',
     right: wp(5),
+  },
+  selfCenter: {
+    alignSelf: 'center',
   },
 });
 

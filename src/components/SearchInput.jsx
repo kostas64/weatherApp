@@ -122,7 +122,11 @@ const SearchInput = ({
   }
 
   return (
-    <View style={[styles.container, {height: value?.length === 0 ? 50 : 300}]}>
+    <View
+      style={[
+        styles.container,
+        value?.length === 0 ? styles.height50 : styles.height300,
+      ]}>
       <GooglePlacesAutocomplete
         ref={ref}
         styles={autocompleteStyles}
@@ -167,6 +171,12 @@ const styles = StyleSheet.create({
     fontFamily: 'Gilroy-Bold',
     textAlignVertical: 'center',
     width: WIDTH - 146,
+  },
+  height50: {
+    height: 50,
+  },
+  height300: {
+    height: 300,
   },
 });
 
