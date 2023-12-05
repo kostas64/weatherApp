@@ -50,7 +50,7 @@ export const getWeatherIconFromCode = (code, time) => {
   const afternoonTime = moment('20:00:00', 'HH:mm:ss');
 
   //Check if is nght to show the proper lottie
-  const isNight = !!time
+  const isNight = time
     ? moment(time).isSameOrAfter(afternoonTime) ||
       moment(time).isBefore(morningTime)
     : false;
