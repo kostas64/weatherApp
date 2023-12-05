@@ -37,7 +37,7 @@ const ContextProvider = ({children}) => {
   const tempUnit = isCelsius ? 'celsius' : 'fahrenheit';
 
   const forecastApi = (place, cityName) => {
-    console.log('Calling Forecast API...', place);
+    console.log('Calling Forecast API...', place, cityName);
 
     !loadingApi.api1 && setLoadingApi({...loadingApi, api1: true});
     getForecast(place || selected, tempUnit)
